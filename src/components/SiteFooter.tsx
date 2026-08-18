@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="foot-ecg" aria-hidden="true">
         <svg viewBox="0 0 1560 54" preserveAspectRatio="none">
           <path
-            d="M0 30 H400 l14-6 12 6 h180 l10-18 14 32 12-26 8 12 h280 l14-6 12 6 h180 l10-18 14 32 12-26 8 12 h360"
+            d="M0 30 H400 l14-6 12 6 h180 l10-18 14 32 12-26 8 12 h280 l14-6 12 6 h180 l10-18 14 32 12-26 8 12 h380"
             fill="none"
             stroke="rgba(53,217,154,.25)"
             strokeWidth="1.6"
