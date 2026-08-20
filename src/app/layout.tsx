@@ -27,7 +27,7 @@ const urdu = Noto_Nastaliq_Urdu({
 });
 
 export const metadata: Metadata = {
-  title: 'The Cor Care — Consultant Cardiology, Lahore | Dr. [Name]',
+  title: 'The Cor Care — Consultant Cardiology, Lahore | Dr. Zeeshan Malik',
   description:
     "The Cor Care — a consultant cardiologist's private practice in Lahore. Honest, unhurried heart care. Book online, check your heart age, live clinic queue, ECG & Echo on-site.",
 };

@@ -24,7 +24,7 @@ export function QueueBar() {
               CLINIC LIVE
             </span>
             <span className="sep">|</span>
-            <span>Open today 17:00–21:00</span>
+            <span>Open today 14:00–21:00</span>
             <span className="sep">|</span>
             <span>
               Now seeing token <span className="tok">{queue.currentToken}</span> of{' '}
@@ -39,7 +39,7 @@ export function QueueBar() {
           <>
             <span className="live paused">● CLINIC CLOSED</span>
             <span className="sep">|</span>
-            <span>Next session: Mon–Sat, 17:00–21:00</span>
+            <span>Next session: Mon–Sat, 14:00–21:00</span>
           </>
         )}
         <span style={{ marginLeft: 'auto' }}>

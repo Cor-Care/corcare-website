@@ -22,7 +22,7 @@ const SERVICES: Service[] = [
   {
     tag: 'ECG·ETT',
     title: 'ECG & stress testing',
-    body: 'On-site ECG and exercise tolerance testing, reported the same visit with a plain-language explanation.',
+    body: 'On-site ECG, exercise tolerance testing and Holter monitoring, reported the same visit with a plain-language explanation.',
     iconPath: <path d="M3 12h4l2.5-6 4 12 2.5-6H21" />,
   },
   {
@@ -34,7 +34,7 @@ const SERVICES: Service[] = [
   {
     tag: 'BP·LIPID',
     title: 'Hypertension & lipid clinic',
-    body: 'Structured programmes that bring blood pressure and cholesterol under control before they damage the heart.',
+    body: 'Structured programmes — with on-site blood tests — that bring blood pressure and cholesterol under control before they damage the heart.',
     iconPath: (
       <>
         <path d="M12 3v6m0 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 8v4" />

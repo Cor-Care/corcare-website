@@ -12,7 +12,7 @@ interface Message {
 // approved v3 demo. The live version swaps this for a safety-tuned medical AI.
 const REPLIES: [RegExp, string][] = [
   [/book|appoint|slot|time/i, "You can book right on this page — tap 'Book a visit' above, or message us on WhatsApp and we'll confirm your slot instantly. Clinic hours are Mon–Sat, 5–9pm."],
-  [/fee|price|charge|cost/i, `Consultation fee is ${clinic.consultationFee}, with a free follow-up within 7 days. You can pay at the clinic or online.`],
+  [/fee|price|charge|cost/i, `Consultation fee is ${clinic.consultationFee}, with a free follow-up within ${clinic.followUpDays} days. You can pay at the clinic or online.`],
   [/chest pain|emergency|heart attack|saans|dard/i, "If you're having chest pain, pressure, breathlessness or pain spreading to your arm/jaw RIGHT NOW — please call 1122 or go to the nearest emergency department immediately. Don't wait for an appointment."],
   [/heart age|quiz|check/i, "Try the free Heart Age Check on this page — five questions, sixty seconds, instant estimate. Scroll to 'How old is your heart?'"],
   [/token|queue|wait/i, 'After you book, you get a token number. The live bar on this site and the app shows which token is being seen right now, so you can time your arrival.'],

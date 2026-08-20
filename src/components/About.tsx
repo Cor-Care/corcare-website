@@ -21,21 +21,22 @@ export function About() {
           </span>
           <h2>Experience you can trust. Honesty you can feel.</h2>
           <p>
-            {clinic.doctorName} is a consultant cardiologist with [15+] years across
-            Pakistan&apos;s leading cardiac centres. Thousands of families come back for one
-            reason: he tells them the truth about their hearts — including when the news is good.
+            {clinic.doctorName} is a consultant interventional cardiologist with 15+ years
+            across Pakistan&apos;s leading cardiac centres. Thousands of families come back for
+            one reason: he tells them the truth about their hearts — including when the news is
+            good.
           </p>
           <div className="pull">
             &ldquo;Explain everything. Never over-treat. Treat every patient like family.&rdquo;
           </div>
           <ul className="tick">
-            <li>{CHECK}MBBS, FCPS (Cardiology) — [College/University]</li>
-            <li>{CHECK}Fellowship / training at [Institution]</li>
-            <li>{CHECK}[20,000+] patients treated · [X,000+] procedures</li>
-            <li>{CHECK}Consultations in Urdu, English and Punjabi</li>
+            <li>{CHECK}MBBS, FCPS (Cardiology) · PMDC No. {clinic.pmdcNumber}</li>
+            <li>{CHECK}Sir Ganga Ram Hospital · Punjab Institute of Cardiology · University of Lahore Hospital</li>
+            <li>{CHECK}Angiography, angioplasty (incl. primary PCI), graft studies & pacemakers</li>
+            <li>{CHECK}Consultations in Urdu and English</li>
           </ul>
           <a href="#book" className="btn btn-red">
-            Consult {clinic.doctorName.replace('[Full Name]', '[Name]')}
+            Consult {clinic.doctorName}
           </a>
         </div>
       </div>

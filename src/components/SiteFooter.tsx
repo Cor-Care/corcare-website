@@ -44,7 +44,7 @@ export function SiteFooter() {
           <div>
             <h4>Timings</h4>
             <p>
-              Mon–Sat: 5:00–9:00 pm
+              Mon–Sat: 2:00–9:00 pm
               <br />
               Sunday: closed
               <br />

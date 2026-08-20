@@ -65,7 +65,7 @@ export function BookingSection() {
             </li>
           </ul>
           <p className="note">
-            Prefer to call? <b style={{ color: '#fff' }}>{clinic.phone}</b> (Mon–Sat, 12–9pm)
+            Prefer to call? <b style={{ color: '#fff' }}>{clinic.phone}</b> (Mon–Sat, 2–9pm)
           </p>
         </div>
         {status === 'success' ? (
