@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { clinic } from '@/lib/config';
 import { getDataSource } from '@/lib/data';
 import { T, useLang } from '@/lib/i18n';
+import { prefersReducedMotion, Reveal } from '@/lib/motion';
 
 interface Question {
   key: string;
@@ -36,6 +37,37 @@ export function HeartAgeCheck() {
   const done = step >= QUESTIONS.length;
   const extra = EXTRA_YEARS[Math.min(risk, EXTRA_YEARS.length - 1)] ?? 0;
   const heartAge = age + extra;
+
+  // Odometer: the result rolls from the real age up to the heart age, then
+  // lands with a single pulse — the gap IS the story.
+  const [displayAge, setDisplayAge] = useState<number | null>(null);
+  const [landed, setLanded] = useState(false);
+
+  useEffect(() => {
+    if (!done) {
+      setDisplayAge(null);
+      setLanded(false);
+      return;
+    }
+    if (prefersReducedMotion() || heartAge === age) {
+      setDisplayAge(heartAge);
+      setLanded(true);
+      return;
+    }
+    setDisplayAge(age);
+    const duration = 1100;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplayAge(Math.round(age + (heartAge - age) * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setLanded(true);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [done, age, heartAge]);
 
   const submitNum = () => {
     const value = parseInt(numInput, 10);
@@ -89,7 +121,7 @@ export function HeartAgeCheck() {
   return (
     <section id="heartage" className="dark">
       <div className="wrap ha-grid">
-        <div className="ha-copy">
+        <Reveal seq className="ha-copy">
           <span className="eyebrow">
             <T k="ha_eyebrow" />
           </span>
@@ -103,15 +135,17 @@ export function HeartAgeCheck() {
             Built on established cardiovascular risk factors. It is a screening guide, not a
             diagnosis — your real numbers come from a proper check-up.
           </p>
-        </div>
-        <div className="ha-card">
+        </Reveal>
+        <Reveal className="ha-card rv-scale" delay={100}>
           <div className="ha-bar">
             <i style={{ width: done ? '100%' : `${(step / QUESTIONS.length) * 100 || 6}%` }} />
           </div>
           {done ? (
             <div className="ha-result">
               <span className="ha-step">Estimated heart age</span>
-              <div className={`big${resultClass}`}>{heartAge}</div>
+              <div className={`big${resultClass}${landed ? ' landed' : ''}`}>
+                {displayAge ?? heartAge}
+              </div>
               <h3>{band}</h3>
               <p>
                 A one-time consultation with ECG and BP check gives you your real numbers — and a
@@ -126,7 +160,7 @@ export function HeartAgeCheck() {
               </button>
             </div>
           ) : (
-            <div>
+            <div className="ha-swap" key={step}>
               <span className="ha-step">
                 Question {step + 1} of {QUESTIONS.length}
               </span>
@@ -164,7 +198,7 @@ export function HeartAgeCheck() {
             Educational estimate only — not a medical diagnosis. If you have symptoms now, call{' '}
             {clinic.emergencyNumber}.
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

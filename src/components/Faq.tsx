@@ -1,3 +1,5 @@
+import { Reveal } from '@/lib/motion';
+
 const FAQS: { q: string; a: string; open?: boolean }[] = [
   {
     q: 'What should I bring to my first appointment?',
@@ -30,18 +32,20 @@ export function Faq() {
   return (
     <section id="faq" style={{ paddingTop: 90 }}>
       <div className="wrap" style={{ maxWidth: 760 }}>
-        <div className="sec-head">
+        <Reveal className="sec-head">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             Common questions
           </span>
           <h2>Before you visit</h2>
-        </div>
-        {FAQS.map((faq) => (
-          <details key={faq.q} open={faq.open}>
-            <summary>{faq.q}</summary>
-            <p>{faq.a}</p>
-          </details>
-        ))}
+        </Reveal>
+        <Reveal seq>
+          {FAQS.map((faq) => (
+            <details key={faq.q} open={faq.open}>
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </Reveal>
       </div>
     </section>
   );

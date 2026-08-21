@@ -1,4 +1,5 @@
 import { T } from '@/lib/i18n';
+import { Reveal } from '@/lib/motion';
 
 interface Service {
   tag: string;
@@ -70,7 +71,7 @@ export function Services() {
   return (
     <section id="services">
       <div className="wrap">
-        <div className="sec-head">
+        <Reveal className="sec-head">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             <T k="svc_eyebrow" />
           </span>
@@ -80,8 +81,8 @@ export function Services() {
           <p>
             <T k="svc_p" />
           </p>
-        </div>
-        <div className="svc-grid">
+        </Reveal>
+        <Reveal seq className="svc-grid">
           {SERVICES.map((service) => (
             <div className="svc" key={service.tag}>
               <span className="num">{service.tag}</span>
@@ -92,7 +93,7 @@ export function Services() {
               <p>{service.body}</p>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

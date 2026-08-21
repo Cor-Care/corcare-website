@@ -181,7 +181,16 @@ nav.top { position: sticky; top: 0; z-index: 80; background: rgba(27, 18, 22, 0.
 /* ------- rhythm journey ------- */
 .rhythm { position: relative; }
 .rhythm-strip { position: relative; margin-top: 70px; }
-.rhythm-line { position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: var(--line); }
+.rhythm-trace { position: absolute; left: 0; right: 0; top: 0; height: 68px; pointer-events: none; }
+.rhythm-trace svg { display: block; width: 100%; height: 68px; overflow: visible; }
+.rt-dim { fill: none; stroke: var(--line); stroke-width: 1.5; }
+/* glow is a wide translucent under-stroke, NOT an svg filter — filters
+   re-rasterize the full-width path on every dashoffset change and can stall
+   the main thread on weak devices */
+.rt-glow { fill: none; stroke: rgba(224, 51, 63, 0.16); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1600; stroke-dashoffset: 1600; }
+.rt-live { fill: none; stroke: var(--red); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1600; stroke-dashoffset: 1600; }
+.rt-dot { fill: var(--red); }
+.rt-dot-halo { fill: rgba(224, 51, 63, 0.18); }
 .waves { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; position: relative; }
 .wave .wv { width: 68px; height: 68px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; margin-bottom: 24px; position: relative; z-index: 2; }
 .wave .wv svg { width: 44px; height: 30px; stroke: var(--red); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -272,7 +281,8 @@ footer.site p { font-size: 14px; }
   .hero-grid, .ha-grid, .about-grid, .book-grid { grid-template-columns: 1fr; gap: 48px; }
   .svc-grid, .stories-grid { grid-template-columns: 1fr; }
   .waves { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .rhythm-line { display: none; }
+  .rhythm-trace { display: none; }
+  .wave { opacity: 1; transform: none; }
   .telemetry .wrap { grid-template-columns: 1fr 1fr; }
   .tele:nth-child(3) { border-left: 0; }
   .fgrid { grid-template-columns: 1fr 1fr; }
@@ -286,4 +296,95 @@ footer.site p { font-size: 14px; }
   .row2 { grid-template-columns: 1fr; }
   .tele { padding: 18px 16px 20px; }
   .tele b { font-size: 20px; }
+}
+
+/* ═══════════════ motion layer ═══════════════
+   Scroll reveals (.rv self / .rv-seq staggered children, driven by
+   src/lib/motion.tsx), hero entrance, signature set pieces. Everything is
+   transform/opacity; prefers-reduced-motion collapses it all at the bottom. */
+:root { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
+
+@keyframes rise-in { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes scale-in { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+
+.rv { opacity: 0; }
+.rv.in { animation: rise-in 0.75s var(--ease-out) both; }
+.rv-scale.in { animation-name: scale-in; animation-duration: 0.9s; }
+.rv-seq > * { opacity: 0; }
+.rv-seq.in > * { animation: rise-in 0.65s var(--ease-out) both; }
+.rv-seq.in > *:nth-child(2) { animation-delay: 0.08s; }
+.rv-seq.in > *:nth-child(3) { animation-delay: 0.16s; }
+.rv-seq.in > *:nth-child(4) { animation-delay: 0.24s; }
+.rv-seq.in > *:nth-child(5) { animation-delay: 0.32s; }
+.rv-seq.in > *:nth-child(6) { animation-delay: 0.4s; }
+.rv-seq.in > *:nth-child(7) { animation-delay: 0.48s; }
+.rv-seq.in > *:nth-child(8) { animation-delay: 0.56s; }
+
+/* hero entrance choreography */
+.hero .eyebrow, .hero h1, .hero .lead, .hero-ctas, .hero-tilt { animation: rise-in 0.85s var(--ease-out) both; }
+.hero h1 { animation-delay: 0.07s; }
+.hero .lead { animation-delay: 0.14s; }
+.hero-ctas { animation-delay: 0.21s; }
+.hero-tilt { animation-delay: 0.18s; animation-duration: 0.95s; }
+.hero h1 em { position: relative; }
+.hero h1 em::after { content: ''; position: absolute; left: 2%; right: 4%; bottom: 7%; height: 2px; background: var(--red); opacity: 0.5; transform: scaleX(0); transform-origin: left; animation: sweep-x 0.7s var(--ease-out) 1.05s both; }
+@keyframes sweep-x { to { transform: scaleX(1); } }
+
+/* living monitor: pointer tilt on the wrapper, lub-dub on the card */
+.hero-tilt { transform: perspective(1100px) rotateX(var(--ty, 0deg)) rotateY(var(--tx, 0deg)); transition: transform 0.3s ease; }
+.monitor { animation: lubdub 2.6s ease-in-out 1.6s infinite; }
+@keyframes lubdub { 0%, 24%, 100% { transform: scale(1); } 5% { transform: scale(1.011); } 10% { transform: scale(1); } 15% { transform: scale(1.006); } }
+.bpm-num { display: inline-block; animation: roll-in 0.5s var(--ease-out); }
+@keyframes roll-in { from { transform: translateY(0.55em); opacity: 0; } }
+
+/* rhythm journey: cards wake as the trace reaches them (desktop only) */
+@media (min-width: 981px) {
+  .wave { opacity: 0.38; transform: translateY(10px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+  .wave.on { opacity: 1; transform: none; }
+}
+.wave .wv { transition: border-color 0.4s ease, box-shadow 0.4s ease; }
+.wave.on .wv { border-color: rgba(224, 51, 63, 0.55); box-shadow: 0 0 0 6px rgba(224, 51, 63, 0.07); }
+.wave.on .wv svg path:not([stroke-dasharray]) { stroke-dasharray: 130; stroke-dashoffset: 130; animation: draw-mini 0.8s ease-out 0.1s forwards; }
+@keyframes draw-mini { to { stroke-dashoffset: 0; } }
+
+/* heart age check: question swap + odometer landing */
+.ha-swap { animation: q-in 0.4s var(--ease-out); }
+@keyframes q-in { from { opacity: 0; transform: translateX(18px); } }
+.ha-result { animation: q-in 0.5s var(--ease-out); }
+.ha-result .big.landed { animation: land-pulse 0.5s ease; }
+@keyframes land-pulse { 30% { transform: scale(1.07); } }
+
+/* live queue: one green pulse + rolling token when the clinic advances */
+.queue.flash { animation: queue-pulse 1.2s ease; }
+@keyframes queue-pulse { 0%, 100% { background: var(--ink2); } 25% { background: #17362a; } }
+.queue .tok.roll { display: inline-block; animation: roll-in 0.5s var(--ease-out); }
+
+/* faq: answer eases open */
+details p { animation: fade-down 0.4s var(--ease-out); }
+@keyframes fade-down { from { opacity: 0; transform: translateY(-6px); } }
+
+/* micro-interactions (declared last so they win over reveal transitions) */
+.btn { transition: transform 0.18s, background 0.18s, border-color 0.18s, box-shadow 0.25s; }
+.btn-red { box-shadow: 0 4px 14px rgba(224, 51, 63, 0.22); }
+.btn-red:hover { transform: translateY(-1.5px); box-shadow: 0 8px 24px rgba(224, 51, 63, 0.38); }
+.navlinks a { background: linear-gradient(currentColor, currentColor) bottom left / 0 1px no-repeat; padding-bottom: 3px; transition: background-size 0.3s var(--ease-out), color 0.15s; }
+.navlinks a:hover { background-size: 100% 1px; }
+.svc .ic { transition: transform 0.35s var(--ease-out); }
+.svc:hover .ic { transform: translateY(-3px) scale(1.08); }
+.story { transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease; }
+.story:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(27, 18, 22, 0.09); }
+.form-card input:focus, .form-card select:focus, .form-card textarea:focus { box-shadow: 0 0 0 3px rgba(224, 51, 63, 0.07); }
+.btn:focus-visible, .ha-opt:focus-visible, .mini-btn:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv, .rv-seq > *, .wave { opacity: 1; transform: none; }
+  .rv.in, .rv-seq.in > *, .hero .eyebrow, .hero h1, .hero .lead, .hero-ctas, .hero-tilt,
+  .hero h1 em::after, .monitor, .bpm-num, .ha-swap, .ha-result, .ha-result .big.landed,
+  .queue.flash, .queue .tok.roll, details p, .wave.on .wv svg path { animation: none; }
+  .hero h1 em::after { transform: scaleX(1); }
+  .hero-tilt { transform: none; transition: none; }
+  .rt-live, .rt-glow { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .rt-dot, .rt-dot-halo { display: none; }
+  .wave.on .wv svg path:not([stroke-dasharray]) { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .btn-red:hover, .svc:hover .ic, .story:hover { transform: none; }
 }

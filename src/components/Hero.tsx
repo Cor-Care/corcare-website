@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clinic } from '@/lib/config';
 import { T, useLang } from '@/lib/i18n';
+import { prefersReducedMotion } from '@/lib/motion';
 
 const BPM_BASE = 70;
 const BPM_JITTER = 5;
@@ -14,6 +15,7 @@ const ECG_PATH =
 export function Hero() {
   const { lang } = useLang();
   const [bpm, setBpm] = useState(72);
+  const tiltRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(
@@ -21,6 +23,30 @@ export function Hero() {
       BPM_TICK_MS,
     );
     return () => clearInterval(timer);
+  }, []);
+
+  // Gentle pointer tilt on the monitor card — mouse/trackpad only, and never
+  // for users who asked for reduced motion.
+  useEffect(() => {
+    const el = tiltRef.current;
+    if (!el || !window.matchMedia('(pointer: fine)').matches || prefersReducedMotion()) return;
+    const move = (e: PointerEvent) => {
+      const rect = el.getBoundingClientRect();
+      const dx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
+      const dy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
+      el.style.setProperty('--tx', `${(dx * 5).toFixed(2)}deg`);
+      el.style.setProperty('--ty', `${(-dy * 5).toFixed(2)}deg`);
+    };
+    const leave = () => {
+      el.style.setProperty('--tx', '0deg');
+      el.style.setProperty('--ty', '0deg');
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerleave', leave);
+    return () => {
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerleave', leave);
+    };
   }, []);
 
   return (
@@ -52,28 +78,33 @@ export function Hero() {
             </a>
           </div>
         </div>
-        <div className="monitor">
-          <div className="monitor-top">
-            <span>
-              {clinic.brandThe} {clinic.brandName} · Clinic
-            </span>
-            <span className="bpm">
-              <span className="bpm-dot" />
-              {bpm} BPM
-            </span>
-          </div>
-          <div className="portrait-img">
-            Professional photo of the doctor
-            <br />
-            (to be provided)
-          </div>
-          <div className="monitor-meta">
-            <h3>{clinic.doctorName}</h3>
-            <div className="creds">{clinic.doctorCreds}</div>
-            <div className="badges">
-              <span className="badge ok">PMDC VERIFIED</span>
-              <span className="badge">[HOSPITAL AFFILIATION]</span>
-              <span className="badge">FCPS</span>
+        <div className="hero-tilt" ref={tiltRef}>
+          <div className="monitor">
+            <div className="monitor-top">
+              <span>
+                {clinic.brandThe} {clinic.brandName} · Clinic
+              </span>
+              <span className="bpm">
+                <span className="bpm-dot" />
+                <span className="bpm-num" key={bpm}>
+                  {bpm}
+                </span>
+                &nbsp;BPM
+              </span>
+            </div>
+            <div className="portrait-img">
+              Professional photo of the doctor
+              <br />
+              (to be provided)
+            </div>
+            <div className="monitor-meta">
+              <h3>{clinic.doctorName}</h3>
+              <div className="creds">{clinic.doctorCreds}</div>
+              <div className="badges">
+                <span className="badge ok">PMDC VERIFIED</span>
+                <span className="badge">[HOSPITAL AFFILIATION]</span>
+                <span className="badge">FCPS</span>
+              </div>
             </div>
           </div>
         </div>

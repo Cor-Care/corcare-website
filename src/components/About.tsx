@@ -1,4 +1,5 @@
 import { clinic } from '@/lib/config';
+import { Reveal } from '@/lib/motion';
 
 const CHECK = (
   <svg viewBox="0 0 24 24">
@@ -10,12 +11,12 @@ export function About() {
   return (
     <section id="about" className="porc">
       <div className="wrap about-grid">
-        <div className="about-img">
+        <Reveal className="about-img rv-scale">
           Clinic / doctor photo
           <br />
           (to be provided)
-        </div>
-        <div className="about">
+        </Reveal>
+        <Reveal seq className="about">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             The doctor
           </span>
@@ -38,7 +39,7 @@ export function About() {
           <a href="#book" className="btn btn-red">
             Consult {clinic.doctorName}
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react';
 import { clinic } from '@/lib/config';
 import { getDataSource } from '@/lib/data';
 import { T, useLang } from '@/lib/i18n';
+import { Reveal } from '@/lib/motion';
 
 const CHECK = (
   <svg viewBox="0 0 24 24">
@@ -43,7 +44,7 @@ export function BookingSection() {
   return (
     <section id="book" className="dark book">
       <div className="wrap book-grid">
-        <div>
+        <Reveal seq>
           <span className="eyebrow">
             <T k="book_eyebrow" />
           </span>
@@ -67,8 +68,9 @@ export function BookingSection() {
           <p className="note">
             Prefer to call? <b style={{ color: '#fff' }}>{clinic.phone}</b> (Mon–Sat, 2–9pm)
           </p>
-        </div>
-        {status === 'success' ? (
+        </Reveal>
+        <Reveal className="rv-scale" delay={120}>
+          {status === 'success' ? (
           <div className="form-card form-success">
             <div className="big-tick">
               <svg viewBox="0 0 24 24">
@@ -133,6 +135,7 @@ export function BookingSection() {
             <p className="note">Your information is private and used only for your appointment.</p>
           </form>
         )}
+        </Reveal>
       </div>
     </section>
   );

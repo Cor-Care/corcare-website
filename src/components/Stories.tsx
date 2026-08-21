@@ -1,3 +1,5 @@
+import { Reveal } from '@/lib/motion';
+
 const STORIES = [
   {
     quote:
@@ -23,14 +25,14 @@ export function Stories() {
   return (
     <section id="stories" className="porc">
       <div className="wrap">
-        <div className="sec-head center">
+        <Reveal className="sec-head center">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             Patient stories
           </span>
           <h2>Trusted by thousands of families</h2>
           <p>Sample content for the demo — real testimonials will be collected with permission.</p>
-        </div>
-        <div className="stories-grid">
+        </Reveal>
+        <Reveal seq className="stories-grid">
           {STORIES.map((story) => (
             <div className="story" key={story.name}>
               <span className="mark">&ldquo;</span>
@@ -42,7 +44,7 @@ export function Stories() {
               </footer>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

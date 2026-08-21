@@ -1,3 +1,8 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { Reveal } from '@/lib/motion';
+
 interface Wave {
   tag: string;
   title: string;
@@ -34,11 +39,86 @@ const WAVES: Wave[] = [
   },
 ];
 
+// One continuous ECG trace behind the four step circles: flat line → P wave →
+// QRS complex → T wave → two follow-up beats. Drawn progressively with scroll.
+const TRACE =
+  'M0 34 H115 q10 -15 20 0 H355 l6 5 6 -27 7 36 5 -19 4 5 H605 q13 -17 26 0 H845 l5 -9 6 9 H920 l5 -9 6 9 H1000';
+
+// Fraction of the trace at which each step's card wakes up.
+const STEP_AT = [0.2, 0.47, 0.7, 0.94];
+
 export function RhythmJourney() {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const liveRef = useRef<SVGPathElement>(null);
+  const dotRef = useRef<SVGCircleElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const strip = stripRef.current;
+    const live = liveRef.current;
+    const dot = dotRef.current;
+    if (!strip || !live || !dot) return;
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(max-width: 980px)').matches
+    ) {
+      setActive(WAVES.length);
+      return;
+    }
+
+    const glow = strip.querySelector<SVGPathElement>('.rt-glow');
+    const halo = strip.querySelector<SVGCircleElement>('.rt-dot-halo');
+    const len = live.getTotalLength();
+    for (const path of [live, glow]) {
+      if (!path) continue;
+      path.style.strokeDasharray = `${len}`;
+      path.style.strokeDashoffset = `${len}`;
+    }
+
+    let raf = 0;
+    let lastProgress = -1;
+    const update = () => {
+      raf = 0;
+      const rect = strip.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Skip all work while the section is far off-screen.
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      const progress = Math.max(0, Math.min(1, (vh * 0.82 - rect.top) / (vh * 0.6)));
+      if (progress === lastProgress) return;
+      lastProgress = progress;
+      const offset = `${len * (1 - progress)}`;
+      live.style.strokeDashoffset = offset;
+      if (glow) glow.style.strokeDashoffset = offset;
+      const tip = live.getPointAtLength(len * progress);
+      const visible = progress > 0.01 && progress < 0.995 ? '1' : '0';
+      dot.setAttribute('cx', `${tip.x}`);
+      dot.setAttribute('cy', `${tip.y}`);
+      dot.style.opacity = visible;
+      if (halo) {
+        halo.setAttribute('cx', `${tip.x}`);
+        halo.setAttribute('cy', `${tip.y}`);
+        halo.style.opacity = visible;
+      }
+      const reached = STEP_AT.filter((t) => progress >= t).length;
+      setActive((prev) => (prev === reached ? prev : reached));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section className="rhythm">
       <div className="wrap">
-        <div className="sec-head">
+        <Reveal className="sec-head">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             One complete beat
           </span>
@@ -46,12 +126,20 @@ export function RhythmJourney() {
           <p style={{ color: 'var(--muted)' }}>
             Like a heartbeat, good care has a rhythm — four waves, nothing skipped.
           </p>
-        </div>
-        <div className="rhythm-strip">
-          <div className="rhythm-line" aria-hidden="true" />
+        </Reveal>
+        <div className="rhythm-strip" ref={stripRef}>
+          <div className="rhythm-trace" aria-hidden="true">
+            <svg viewBox="0 0 1000 68" preserveAspectRatio="none">
+              <path className="rt-dim" d={TRACE} />
+              <path className="rt-glow" d={TRACE} />
+              <path className="rt-live" ref={liveRef} d={TRACE} />
+              <circle className="rt-dot-halo" r="9" cx="0" cy="34" style={{ opacity: 0 }} />
+              <circle className="rt-dot" ref={dotRef} r="4" cx="0" cy="34" style={{ opacity: 0 }} />
+            </svg>
+          </div>
           <div className="waves">
-            {WAVES.map((wave) => (
-              <div className="wave" key={wave.tag}>
+            {WAVES.map((wave, i) => (
+              <div className={`wave${i < active ? ' on' : ''}`} key={wave.tag}>
                 <div className="wv">
                   <svg viewBox="0 0 44 30">
                     <path d={wave.path} strokeDasharray={wave.dashed ? '2 5' : undefined} />

@@ -1,12 +1,14 @@
 import { T } from '@/lib/i18n';
+import { CountUp, Reveal } from '@/lib/motion';
 
 export function Telemetry() {
   return (
     <div className="telemetry">
-      <div className="wrap">
+      <Reveal seq className="wrap">
         <div className="tele">
           <b>
-            15<i>+</i>
+            <CountUp value={15} duration={1100} />
+            <i>+</i>
           </b>
           <span>
             <T k="stat1" />
@@ -14,7 +16,8 @@ export function Telemetry() {
         </div>
         <div className="tele">
           <b>
-            20,000<i>+</i>
+            <CountUp value={20000} />
+            <i>+</i>
           </b>
           <span>
             <T k="stat2" />
@@ -22,7 +25,8 @@ export function Telemetry() {
         </div>
         <div className="tele">
           <b>
-            4.9<i>/5</i>
+            <CountUp value={4.9} decimals={1} duration={1200} />
+            <i>/5</i>
           </b>
           <span>
             <T k="stat3" />
@@ -30,13 +34,15 @@ export function Telemetry() {
         </div>
         <div className="tele">
           <b>
-            &lt;15<i>min</i>
+            &lt;
+            <CountUp value={15} duration={1100} />
+            <i>min</i>
           </b>
           <span>
             <T k="stat4" />
           </span>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 }
