@@ -41,11 +41,14 @@ const WAVES: Wave[] = [
 
 // One continuous ECG trace behind the four step circles: flat line → P wave →
 // QRS complex → T wave → two follow-up beats. Drawn progressively with scroll.
+// Starts at the first circle's center so no stub pokes out to its left.
 const TRACE =
-  'M0 34 H115 q10 -15 20 0 H355 l6 5 6 -27 7 36 5 -19 4 5 H605 q13 -17 26 0 H845 l5 -9 6 9 H920 l5 -9 6 9 H1000';
+  'M27 34 H115 q10 -15 20 0 H355 l6 5 6 -27 7 36 5 -19 4 5 H605 q13 -17 26 0 H845 l5 -9 6 9 H920 l5 -9 6 9 H1000';
 
-// Fraction of the trace at which each step's card wakes up.
-const STEP_AT = [0.2, 0.47, 0.7, 0.94];
+// x of each step circle's center in the trace's viewBox — each card wakes the
+// moment the drawn tip crosses its circle, so wake points must be derived from
+// the real path geometry, never hardcoded fractions of arc length.
+const CIRCLE_X = [27, 277, 527, 777];
 
 export function RhythmJourney() {
   const stripRef = useRef<HTMLDivElement>(null);
@@ -75,6 +78,20 @@ export function RhythmJourney() {
       path.style.strokeDashoffset = `${len}`;
     }
 
+    // Arc-length fraction at which the tip reaches each circle's center
+    // (x is monotonic along the trace, so binary search works).
+    const wakeAt = CIRCLE_X.map((cx) => {
+      let lo = 0;
+      let hi = len;
+      for (let k = 0; k < 18; k++) {
+        const mid = (lo + hi) / 2;
+        if (live.getPointAtLength(mid).x < cx) lo = mid;
+        else hi = mid;
+      }
+      return hi / len;
+    });
+    wakeAt[0] = Math.max(wakeAt[0], 0.02);
+
     let raf = 0;
     let lastProgress = -1;
     const update = () => {
@@ -99,7 +116,7 @@ export function RhythmJourney() {
         halo.setAttribute('cy', `${tip.y}`);
         halo.style.opacity = visible;
       }
-      const reached = STEP_AT.filter((t) => progress >= t).length;
+      const reached = wakeAt.filter((t) => progress >= t).length;
       setActive((prev) => (prev === reached ? prev : reached));
     };
     const onScroll = () => {
