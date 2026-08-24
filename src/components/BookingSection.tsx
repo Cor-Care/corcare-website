@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
+import { BOOKING_PREFILL_EVENT, type BookingPrefill } from '@/lib/assistant';
 import { clinic } from '@/lib/config';
 import { getDataSource } from '@/lib/data';
 import { T, useLang } from '@/lib/i18n';
@@ -18,6 +19,28 @@ export function BookingSection() {
   const { lang } = useLang();
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+
+  // The assistant chat can pre-fill this (uncontrolled) form on the user's behalf.
+  useEffect(() => {
+    const onPrefill = (event: Event) => {
+      const detail = (event as CustomEvent<BookingPrefill>).detail ?? {};
+      const setField = (id: string, value?: string) => {
+        const field = document.getElementById(id);
+        if (value && (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+          field.value = value;
+        }
+      };
+      setField('bkName', detail.name);
+      setField('bkPhone', detail.phone);
+      setField('bkReason', detail.reason);
+      const typeField = document.getElementById('bkType');
+      if (detail.type && typeField instanceof HTMLSelectElement) {
+        typeField.value = detail.type === 'video' ? 'Video consultation' : 'Clinic visit';
+      }
+    };
+    window.addEventListener(BOOKING_PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(BOOKING_PREFILL_EVENT, onPrefill);
+  }, []);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -14,10 +14,12 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { Stories } from '@/components/Stories';
 import { Telemetry } from '@/components/Telemetry';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
+import { siteJsonLdString } from '@/lib/schema';
 
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: siteJsonLdString }} />
       <EmergencyStrip />
       <Navbar />
       <Hero />

@@ -1,6 +1,9 @@
 // Clinic-wide constants — real values from the doctor's intake form
 // (19 Aug 2026, Dr Zeeshan Malik) + address supplied by Baqir 20 Aug 2026.
 export const clinic = {
+  // Canonical origin for metadata, sitemap, robots, and JSON-LD.
+  // Swap to 'https://thecorcare.pk' once the domain is purchased and pointed.
+  siteUrl: 'https://corcare-website.vercel.app',
   brandThe: 'The',
   brandName: 'Cor Care',
   city: 'Lahore',
