@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { clinic } from '@/lib/config';
 import { T, useLang } from '@/lib/i18n';
 import { Logo } from './Logo';
+import { ScrollPulse } from './ScrollPulse';
 
 export function Navbar() {
   const { lang, toggle } = useLang();
@@ -36,6 +37,7 @@ export function Navbar() {
           </button>
         </div>
       </div>
+      <ScrollPulse />
     </nav>
   );
 }

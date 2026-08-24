@@ -25,6 +25,12 @@ const QUESTIONS: Question[] = [
 // Risk points → extra heart-age years (same banding as the approved v3 demo).
 const EXTRA_YEARS = [0, 1, 3, 5, 8, 11, 14, 17];
 
+// Gauge ring around the result: circumference of the r=66 circle. The filled
+// fraction maps extra years onto the arc, floored so even a perfect result
+// shows a visible sliver of band colour.
+const RING_CIRCUMFERENCE = 414.69;
+const ringFill = (extra: number) => Math.min(1, 0.12 + extra * 0.05);
+
 export function HeartAgeCheck() {
   const { lang } = useLang();
   const [step, setStep] = useState(0);
@@ -68,6 +74,30 @@ export function HeartAgeCheck() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [done, age, heartAge]);
+
+  // Gauge ring sweeps to its band in sync with the odometer: first commit a
+  // frame at full offset (empty ring), then let the CSS transition carry it.
+  const [ringOffset, setRingOffset] = useState(RING_CIRCUMFERENCE);
+
+  useEffect(() => {
+    if (!done) {
+      setRingOffset(RING_CIRCUMFERENCE);
+      return;
+    }
+    const target = RING_CIRCUMFERENCE * (1 - ringFill(extra));
+    if (prefersReducedMotion()) {
+      setRingOffset(target);
+      return;
+    }
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setRingOffset(target));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [done, extra]);
 
   const submitNum = () => {
     const value = parseInt(numInput, 10);
@@ -143,8 +173,20 @@ export function HeartAgeCheck() {
           {done ? (
             <div className="ha-result">
               <span className="ha-step">Estimated heart age</span>
-              <div className={`big${resultClass}${landed ? ' landed' : ''}`}>
-                {displayAge ?? heartAge}
+              <div className={`ha-ring${resultClass}`}>
+                <svg viewBox="0 0 150 150" aria-hidden="true">
+                  <circle className="ring-track" cx="75" cy="75" r="66" />
+                  <circle
+                    className="ring-fill"
+                    cx="75"
+                    cy="75"
+                    r="66"
+                    style={{ strokeDashoffset: ringOffset }}
+                  />
+                </svg>
+                <div className={`big${resultClass}${landed ? ' landed' : ''}`}>
+                  {displayAge ?? heartAge}
+                </div>
               </div>
               <h3>{band}</h3>
               <p>

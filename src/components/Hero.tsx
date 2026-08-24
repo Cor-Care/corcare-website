@@ -9,6 +9,11 @@ const BPM_BASE = 70;
 const BPM_JITTER = 5;
 const BPM_TICK_MS = 2600;
 
+// Seamless 120-unit ECG tile for the monitor's running strip — starts and
+// ends at y=11 so a copy translated 120 units right chains without a seam.
+const MONITOR_TILE =
+  'M0 11 h14 l3-5 3 5 h14 l4 3 3-9 3 9 3-3 h14 l3-5 3 5 h14 l4 3 3-9 3 9 3-3 h26';
+
 const ECG_PATH =
   'M0 50 H120 l14-8 12 8 h50 l10-30 14 52 12-40 8 18 h60 l14-8 12 8 h120 l10-26 14 46 12-36 8 16 h90 l14-8 12 8 h60 l10-30 14 52 12-40 8 18 h120 l14-8 12 8 h100 l10-26 14 46 12-36 8 16 h90 l14-8 12 8 h70 l10-30 14 52 12-40 8 18 h330';
 
@@ -83,6 +88,14 @@ export function Hero() {
             <div className="monitor-top">
               <span>
                 {clinic.brandThe} {clinic.brandName} · Clinic
+              </span>
+              <span className="mon-strip" aria-hidden="true">
+                <svg viewBox="0 0 120 19" preserveAspectRatio="none">
+                  <g className="mon-run">
+                    <path d={MONITOR_TILE} />
+                    <path d={MONITOR_TILE} transform="translate(120 0)" />
+                  </g>
+                </svg>
               </span>
               <span className="bpm">
                 <span className="bpm-dot" />

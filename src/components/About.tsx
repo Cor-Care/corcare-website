@@ -15,6 +15,8 @@ export function About() {
           Clinic / doctor photo
           <br />
           (to be provided)
+          <span className="echo" aria-hidden="true" />
+          <span className="echo echo2" aria-hidden="true" />
         </Reveal>
         <Reveal seq className="about">
           <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>

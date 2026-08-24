@@ -74,9 +74,12 @@ export function BookingSection() {
           <div className="form-card form-success">
             <div className="big-tick">
               <svg viewBox="0 0 24 24">
-                <path d="m5 13 4 4L19 7" />
+                <path d="m5 13 4 4L19 7" pathLength={40} />
               </svg>
             </div>
+            <svg className="success-ecg" viewBox="0 0 300 26" aria-hidden="true">
+              <path d="M0 14 H118 l6-9 6 14 5-10 4 5 H300" pathLength={320} />
+            </svg>
             <h3>Request received</h3>
             <p>
               The clinic will confirm your slot on WhatsApp shortly. If it&apos;s urgent, call{' '}
