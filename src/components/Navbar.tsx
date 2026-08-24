@@ -30,9 +30,16 @@ export function Navbar() {
           <a href="#book" className="btn btn-red btn-sm">
             <T k="nav_book" />
           </a>
-          <button className="burger" aria-label="Menu" onClick={() => setMenuOpen((v) => !v)}>
+          <button
+            className={`burger${menuOpen ? ' open' : ''}`}
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
             <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round">
-              <path d="M4 7h16M4 12h16M4 17h16" />
+              <path className="bl-1" d="M4 7h16" />
+              <path className="bl-2" d="M4 12h16" />
+              <path className="bl-3" d="M4 17h16" />
             </svg>
           </button>
         </div>

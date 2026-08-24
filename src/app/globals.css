@@ -34,7 +34,7 @@ h1, h2, h3.serif { font-family: var(--font-serif), serif; font-weight: 500; line
 a { color: inherit; }
 img { max-width: 100%; }
 ::selection { background: var(--red); color: #fff; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 15px 28px; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.18s, background 0.18s, border-color 0.18s; border: 1px solid transparent; cursor: pointer; font-family: var(--font-sans); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 15px 28px; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.18s, background 0.18s, border-color 0.18s; border: 1px solid transparent; cursor: pointer; font-family: var(--font-sans); white-space: nowrap; }
 .btn:active { transform: scale(0.97); }
 .btn-red { background: var(--red); color: #fff; }
 .btn-red:hover { background: var(--red-hover); }
@@ -53,7 +53,7 @@ section { padding: 110px 0; }
 /* ------- logo ------- */
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo svg { width: 30px; height: 30px; }
-.logo .word { font-family: var(--font-serif), serif; font-weight: 600; font-size: 19px; letter-spacing: -0.02em; line-height: 1; }
+.logo .word { font-family: var(--font-serif), serif; font-weight: 600; font-size: 19px; letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
 .logo .word small { display: block; font-family: var(--font-mono), monospace; font-weight: 500; font-size: 8.5px; letter-spacing: 0.34em; text-transform: uppercase; opacity: 0.55; margin-bottom: 2px; }
 
 /* ------- emergency strip ------- */
@@ -296,6 +296,20 @@ footer.site p { font-size: 14px; }
   .row2 { grid-template-columns: 1fr; }
   .tele { padding: 18px 16px 20px; }
   .tele b { font-size: 20px; }
+  /* phone-width nav: everything must fit on one 72px line */
+  .wrap { padding: 0 20px; }
+  .logo svg { width: 26px; height: 26px; }
+  .logo .word { font-size: 17px; }
+  .nav-cta { gap: 8px; }
+  .btn-sm { padding: 9px 14px; font-size: 13px; }
+  .lang-toggle { padding: 7px 10px; font-size: 12px; }
+  .burger { padding: 4px; }
+  .burger svg { width: 24px; height: 24px; }
+  .strip { font-size: 12px; }
+  /* the hero ECG band's 1560-unit path squishes into noise at phone width —
+     show a window onto it at near-desktop proportions instead */
+  .ecg-band { overflow: hidden; }
+  .ecg-band svg { width: 340%; }
 }
 
 /* ═══════════════ motion layer ═══════════════
@@ -432,6 +446,21 @@ details p { animation: fade-down 0.4s var(--ease-out); }
 .story:hover .story-ecg path { opacity: 0.85; }
 @keyframes story-beat { 0%, 55%, 100% { transform: scaleY(1); } 12% { transform: scaleY(1.35); } 26% { transform: scaleY(1); } 38% { transform: scaleY(1.18); } }
 
+/* mobile menu: burger morphs into an X; dropdown eases open with a link
+   stagger (close stays instant — the panel is display-toggled) */
+.burger path { transition: transform 0.32s var(--ease-out), opacity 0.2s ease; transform-box: fill-box; transform-origin: center; }
+.burger.open .bl-1 { transform: translateY(5px) rotate(45deg); }
+.burger.open .bl-2 { opacity: 0; }
+.burger.open .bl-3 { transform: translateY(-5px) rotate(-45deg); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } }
+.navlinks.open { animation: menu-in 0.32s var(--ease-out); }
+.navlinks.open a { animation: rise-in 0.4s var(--ease-out) both; }
+.navlinks.open a:nth-child(2) { animation-delay: 0.04s; }
+.navlinks.open a:nth-child(3) { animation-delay: 0.08s; }
+.navlinks.open a:nth-child(4) { animation-delay: 0.12s; }
+.navlinks.open a:nth-child(5) { animation-delay: 0.16s; }
+.navlinks.open a:nth-child(6) { animation-delay: 0.2s; }
+
 /* cardiograph paper: faint grid on dark sections (hero is a header, so it
    stays clean) */
 section.dark { background-image: linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px); background-size: 26px 26px; }
@@ -458,4 +487,6 @@ section.dark { background-image: linear-gradient(rgba(255, 255, 255, 0.022) 1px,
   .svc .ic path, .svc .ic circle, .story-ecg path,
   .form-success .big-tick svg path, .success-ecg path { stroke-dasharray: none; stroke-dashoffset: 0; }
   .svc:hover::before { transition: none; transform: translateX(-100%); }
+  .navlinks.open, .navlinks.open a { animation: none; }
+  .burger path { transition: none; }
 }
