@@ -2,8 +2,8 @@
 // (19 Aug 2026, Dr Zeeshan Malik) + address supplied by Baqir 20 Aug 2026.
 export const clinic = {
   // Canonical origin for metadata, sitemap, robots, and JSON-LD.
-  // Swap to 'https://thecorcare.pk' once the domain is purchased and pointed.
-  siteUrl: 'https://corcare-website.vercel.app',
+  // Live on thecorcare.com since Sep 2026; the apex 308s to www, so www is canonical.
+  siteUrl: 'https://www.thecorcare.com',
   brandThe: 'The',
   brandName: 'Cor Care',
   city: 'Lahore',
