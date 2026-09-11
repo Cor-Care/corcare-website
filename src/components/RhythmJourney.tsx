@@ -21,7 +21,7 @@ const WAVES: Wave[] = [
   {
     tag: 'QRS · Visit',
     title: 'Be seen, properly',
-    body: 'A full, unhurried consultation at the clinic — or by video from home. Tests done and explained the same visit.',
+    body: 'A full, unhurried consultation at the clinic — tests done and explained the same visit, never rushed.',
     path: 'M2 20 h10 l4-6 5 14 5-24 5 20 3-4 h10',
   },
   {

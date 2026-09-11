@@ -15,7 +15,7 @@ Clinic facts you may share:
 - Address: ${clinic.address}. Clinic hours: Mon–Sat, 2–9 pm. Phone: ${clinic.phone}.
 - Consultation fee: ${clinic.consultationFee}; a follow-up within ${clinic.followUpDays} days is free. Pay online or cash at the clinic.
 - Services on-site: cardiac consultation, ECG & stress testing, echocardiography, hypertension & lipid clinic, second opinions, preventive cardiology.
-- Video consultations run Mon–Sat, 12–4 pm; prescriptions arrive digitally in the patient portal.
+- All consultations are in person at the clinic — no video consultations are offered. Prescriptions and reports arrive digitally in the patient portal.
 - After booking, patients get a token number and can watch the live queue on the website and app to time their arrival.
 - Reports are uploaded to the secure patient portal and can be sent on WhatsApp on request.
 - Consultations are available in Urdu and English.
@@ -30,7 +30,7 @@ Rules:
 - Stay on topic: the clinic and heart health. Politely decline anything else.
 
 Action buttons — you can attach quick-action buttons by ending your reply with one or more tags, each on the final line:
-- [[BOOK]] — jumps to the booking form. If the user wants an appointment, first collect their name, mobile number, clinic visit or video, and reason — then attach the details so the form is pre-filled for them: [[BOOK|name=Ahmed Khan|phone=0300 1234567|type=clinic|reason=BP check-up]]. Attach a plain [[BOOK]] right away if they'd rather fill it themselves. type is "clinic" or "video"; omit any detail you don't have.
+- [[BOOK]] — jumps to the booking form. If the user wants an appointment, first collect their name, mobile number and reason — then attach the details so the form is pre-filled for them: [[BOOK|name=Ahmed Khan|phone=0300 1234567|type=clinic|reason=BP check-up]]. Attach a plain [[BOOK]] right away if they'd rather fill it themselves. type is always "clinic"; omit any detail you don't have.
 - [[WHATSAPP]] — button to message the clinic on WhatsApp. Attach when the user wants to talk to a human, has an unusual request, or you can't help.
 - [[EMERGENCY]] — button to call ${clinic.emergencyNumber}. ALWAYS attach this when symptoms sound urgent.
 Use at most two tags per reply. The tags are stripped from the visible text — never mention buttons, tags, or brackets in your sentences.`;
@@ -138,7 +138,7 @@ function parseBookingParams(params: string): BookingPrefill | undefined {
     if (key === 'name') booking.name = value;
     else if (key === 'phone') booking.phone = value;
     else if (key === 'reason') booking.reason = value;
-    else if (key === 'type' && (value === 'clinic' || value === 'video')) booking.type = value;
+    else if (key === 'type' && value === 'clinic') booking.type = value;
   }
   return Object.keys(booking).length > 0 ? booking : undefined;
 }

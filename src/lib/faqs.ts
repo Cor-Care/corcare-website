@@ -48,7 +48,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: 'Do you offer video consultations?',
-    a: 'Yes. Patients from other cities, or those unable to travel, can consult by video and receive their prescription digitally in the patient portal.',
+    a: 'Not at present — every consultation is in person at the clinic, so the doctor can examine you properly and run any tests on the spot. Your reports and prescriptions are still delivered digitally in the patient portal.',
   },
   {
     q: 'How does live token tracking work?',

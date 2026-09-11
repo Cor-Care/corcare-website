@@ -35,7 +35,7 @@ export function BookingSection() {
       setField('bkReason', detail.reason);
       const typeField = document.getElementById('bkType');
       if (detail.type && typeField instanceof HTMLSelectElement) {
-        typeField.value = detail.type === 'video' ? 'Video consultation' : 'Clinic visit';
+        typeField.value = 'Clinic visit';
       }
     };
     window.addEventListener(BOOKING_PREFILL_EVENT, onPrefill);
@@ -50,7 +50,7 @@ export function BookingSection() {
     const result = await getDataSource().submitBooking({
       fullName: String(fields.get('name') ?? ''),
       phone: String(fields.get('phone') ?? ''),
-      type: fields.get('type') === 'Video consultation' ? 'video' : 'clinic',
+      type: 'clinic',
       preferredDate: String(fields.get('date') ?? '') || null,
       reason: String(fields.get('reason') ?? ''),
       language: lang,
@@ -75,8 +75,7 @@ export function BookingSection() {
             <T k="book_h2" />
           </h2>
           <p className="bl">
-            Clinic visit or video consultation — confirmation and reminders arrive by WhatsApp and
-            SMS.
+            Book your clinic visit — confirmation and reminders arrive by WhatsApp and SMS.
           </p>
           <ul className="tick">
             <li>
@@ -129,7 +128,6 @@ export function BookingSection() {
                 <label htmlFor="bkType">Type</label>
                 <select id="bkType" name="type">
                   <option>Clinic visit</option>
-                  <option>Video consultation</option>
                 </select>
               </div>
               <div>

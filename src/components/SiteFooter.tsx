@@ -21,7 +21,7 @@ export function SiteFooter() {
           <div>
             <Logo />
             <p style={{ marginTop: 18 }}>
-              Honest, specialist heart care in {clinic.city}. Book online, consult by video, and
+              Honest, specialist heart care in {clinic.city}. Book online and
               keep your whole heart history in one place.
             </p>
             <p className="f-urdu urdu">دل کا علاج — دیانتداری کے ساتھ</p>
@@ -47,11 +47,6 @@ export function SiteFooter() {
               Mon–Sat: 2:00–9:00 pm
               <br />
               Sunday: closed
-              <br />
-              <br />
-              Video consultations:
-              <br />
-              Mon–Sat: 12:00–4:00 pm
             </p>
           </div>
         </div>
@@ -59,7 +54,7 @@ export function SiteFooter() {
           <span>
             © 2026 {clinic.brandThe} {clinic.brandName}. All rights reserved.
           </span>
-          <span>Built by [Your Software House]</span>
+          <span>Built by Jabran &amp; Co</span>
         </div>
         <p className="disclaimer">
           Content on this website is for information only and is not a substitute for professional

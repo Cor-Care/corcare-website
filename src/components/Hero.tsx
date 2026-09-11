@@ -115,7 +115,6 @@ export function Hero() {
               <div className="creds">{clinic.doctorCreds}</div>
               <div className="badges">
                 <span className="badge ok">PMDC VERIFIED</span>
-                <span className="badge">[HOSPITAL AFFILIATION]</span>
                 <span className="badge">FCPS</span>
               </div>
             </div>

@@ -24,11 +24,11 @@ const REPLIES: [RegExp, string, AssistantAction[]?][] = [
   [/token|queue|wait/i, 'After you book, you get a token number. The live bar on this site and the app shows which token is being seen right now, so you can time your arrival.'],
   [/bp|blood pressure|hypertension/i, 'High blood pressure often has no symptoms but silently damages the heart. We run a dedicated hypertension clinic — monitoring, medicine adjustment and diet guidance. Would you like to book a BP check-up?'],
   [/echo|ecg|test/i, 'We offer ECG, echocardiography and stress testing on-site, reported by the consultant on the same visit. You can book any test through the appointment form.'],
-  [/video|online consult/i, "Yes — video consultations run Mon–Sat, 12–4pm. You'll receive your prescription digitally in the patient portal afterwards."],
+  [/video|online consult/i, 'We currently see all patients in person at the clinic (Mon–Sat, 2–9pm) so the doctor can examine you properly. Your reports and prescriptions are delivered digitally in the patient portal.'],
   [/portal|report|app/i, `Your reports, prescriptions and reminders live in the ${clinic.brandName} patient portal — tap 'Patient Portal' in the menu, or see the mobile app preview under 'The App'.`],
 ];
 
-const FALLBACK = `I couldn't reach our assistant just now. Ask me about fees, timings, tests, the Heart Age Check, video consultations or the patient portal — or call us at ${clinic.phone}.`;
+const FALLBACK = `I couldn't reach our assistant just now. Ask me about fees, timings, tests, the Heart Age Check or the patient portal — or call us at ${clinic.phone}.`;
 
 const GREETING = `Assalam-o-Alaikum. I'm the ${clinic.brandName} assistant — I can help you book an appointment, explain our services, or answer general heart-health questions. How can I help?`;
 

@@ -25,7 +25,7 @@ export const siteJsonLd = {
       name: brandFull,
       url: clinic.siteUrl,
       description:
-        "A consultant cardiologist's private practice in Lahore, Pakistan. Cardiac consultation, ECG & stress testing, echocardiography, hypertension & lipid clinic, and preventive cardiology — with online booking, video consultations, and a live clinic queue.",
+        "A consultant cardiologist's private practice in Lahore, Pakistan. Cardiac consultation, ECG & stress testing, echocardiography, hypertension & lipid clinic, and preventive cardiology — with online booking and a live clinic queue.",
       medicalSpecialty: 'Cardiovascular',
       telephone: clinic.phone,
       email: clinic.email,
@@ -45,7 +45,6 @@ export const siteJsonLd = {
         'Hypertension & lipid clinic',
         'Second opinions',
         'Preventive cardiology',
-        'Video consultation',
       ].map((name) => ({ '@type': 'MedicalProcedure', name })),
       employee: { '@id': physicianId },
       areaServed: { '@type': 'Country', name: 'Pakistan' },
