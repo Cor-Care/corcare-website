@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { clinic } from '@/lib/config';
 
-// Placeholder until the corcare-portal app deploys to portal.thecorcare.pk.
+// Placeholder until the corcare-portal app deploys to portal.thecorcare.com.
 export default function PortalComingSoon() {
   return (
     <main className="dark" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 32 }}>

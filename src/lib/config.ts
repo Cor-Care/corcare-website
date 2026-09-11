@@ -13,7 +13,7 @@ export const clinic = {
   phone: '+92 326 2000341',
   phoneHref: 'tel:+923262000341',
   whatsappHref: 'https://wa.me/923312000311',
-  email: 'care@thecorcare.pk',
+  email: 'care@thecorcare.com',
   emergencyNumber: '1122',
   emergencyHref: 'tel:1122',
   address: '67 CCA, Block A, Khayaban-e-Amin, Lahore',
