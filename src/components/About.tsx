@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import doctorStudio from '@/assets/doctor/dr-zeeshan-malik-studio.jpg';
 import { clinic } from '@/lib/config';
 import { Reveal } from '@/lib/motion';
 
@@ -12,9 +14,13 @@ export function About() {
     <section id="about" className="porc">
       <div className="wrap about-grid">
         <Reveal className="about-img rv-scale">
-          Clinic / doctor photo
-          <br />
-          (to be provided)
+          <Image
+            src={doctorStudio}
+            alt={`${clinic.doctorName} in a navy suit, seated for a television interview`}
+            fill
+            sizes="(max-width: 980px) 92vw, 440px"
+            placeholder="blur"
+          />
           <span className="echo" aria-hidden="true" />
           <span className="echo echo2" aria-hidden="true" />
         </Reveal>

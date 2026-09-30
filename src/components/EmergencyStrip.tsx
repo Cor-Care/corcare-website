@@ -9,7 +9,7 @@ export function EmergencyStrip() {
           <a className="em-call" href={clinic.emergencyHref}>
             {clinic.emergencyNumber}
           </a>{' '}
-          — do not wait for an appointment · or press SOS in the app
+          — do not wait for an appointment
         </div>
         <div className="mono" style={{ fontSize: 12 }}>
           {clinic.hoursLine} · <b>{clinic.phone}</b>

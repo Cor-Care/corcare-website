@@ -1,6 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import doctorPortrait from '@/assets/doctor/dr-zeeshan-malik-portrait.jpg';
 import { clinic } from '@/lib/config';
 import { T, useLang } from '@/lib/i18n';
 import { prefersReducedMotion } from '@/lib/motion';
@@ -106,9 +108,14 @@ export function Hero() {
               </span>
             </div>
             <div className="portrait-img">
-              Professional photo of the doctor
-              <br />
-              (to be provided)
+              <Image
+                src={doctorPortrait}
+                alt={`${clinic.doctorName}, consultant interventional cardiologist`}
+                fill
+                sizes="(max-width: 980px) 92vw, 460px"
+                placeholder="blur"
+                preload
+              />
             </div>
             <div className="monitor-meta">
               <h3>{clinic.doctorName}</h3>

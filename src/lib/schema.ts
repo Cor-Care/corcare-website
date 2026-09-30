@@ -1,3 +1,4 @@
+import doctorPortrait from '@/assets/doctor/dr-zeeshan-malik-portrait.jpg';
 import { clinic } from '@/lib/config';
 import { FAQS } from '@/lib/faqs';
 
@@ -54,6 +55,7 @@ export const siteJsonLd = {
       '@id': physicianId,
       name: clinic.doctorName,
       jobTitle: 'Consultant Interventional Cardiologist',
+      image: `${clinic.siteUrl}${doctorPortrait.src}`,
       description: `${clinic.doctorName} — MBBS, FCPS (Cardiology), PMDC No. ${clinic.pmdcNumber}. Consultant interventional cardiologist in Lahore with 15+ years across Pakistan's leading cardiac centres. Angiography, angioplasty (incl. primary PCI), graft studies & pacemakers. Consultations in Urdu and English.`,
       medicalSpecialty: 'Cardiovascular',
       telephone: clinic.phone,
