@@ -20,6 +20,6 @@ export const clinic = {
   hoursShort: '2–9 pm',
   consultationFee: 'Rs 3,000',
   followUpDays: '5',
-  portalUrl: '/portal',
+  portalUrl: 'https://portal.thecorcare.com',
   appUrl: '/app',
 } as const;
