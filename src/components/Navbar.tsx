@@ -14,7 +14,7 @@ export function Navbar() {
   return (
     <nav className="top">
       <div className="wrap navbar">
-        <Logo wordColor="#fbf7f8" />
+        <Logo />
         <div className={`navlinks${menuOpen ? ' open' : ''}`}>
           <a href="#services" onClick={closeMenu}><T k="nav_services" /></a>
           <a href="#heartage" onClick={closeMenu}><T k="nav_heartage" /></a>

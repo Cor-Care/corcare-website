@@ -1,6 +1,6 @@
 import { clinic } from '@/lib/config';
 
-export function Logo({ wordColor }: { wordColor?: string }) {
+export function Logo() {
   return (
     <a className="logo" href="#" aria-label={`${clinic.brandThe} ${clinic.brandName}`}>
       <svg viewBox="0 0 32 32" fill="none">
@@ -12,7 +12,7 @@ export function Logo({ wordColor }: { wordColor?: string }) {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="word" style={wordColor ? { color: wordColor } : undefined}>
+      <span className="word">
         <small>{clinic.brandThe}</small>
         {clinic.brandName}
       </span>

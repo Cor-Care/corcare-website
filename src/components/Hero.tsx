@@ -60,7 +60,7 @@ export function Hero() {
     <header className="hero">
       <div className="wrap hero-grid">
         <div>
-          <span className="eyebrow" style={{ color: 'var(--pulse)' }}>
+          <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             <T k="hero_eyebrow" />
           </span>
           {lang === 'ur' ? (
@@ -77,7 +77,7 @@ export function Hero() {
             <a href="#book" className="btn btn-red">
               <T k="hero_cta1" />
             </a>
-            <a href={clinic.whatsappHref} className="btn btn-ghost">
+            <a href={clinic.whatsappHref} className="btn btn-ghost-ink">
               <svg className="ic" viewBox="0 0 24 24">
                 <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5z" />
               </svg>

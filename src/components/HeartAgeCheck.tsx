@@ -149,10 +149,10 @@ export function HeartAgeCheck() {
   const current = QUESTIONS[step];
 
   return (
-    <section id="heartage" className="dark">
+    <section id="heartage" className="mist">
       <div className="wrap ha-grid">
         <Reveal seq className="ha-copy">
-          <span className="eyebrow">
+          <span className="eyebrow" style={{ color: 'var(--oxblood)' }}>
             <T k="ha_eyebrow" />
           </span>
           <h2 className={lang === 'ur' ? 'urdu' : undefined}>
@@ -161,7 +161,7 @@ export function HeartAgeCheck() {
           <p className={lang === 'ur' ? 'urdu' : undefined}>
             <T k="ha_p" />
           </p>
-          <p style={{ fontSize: 14, color: 'var(--fog2)' }}>
+          <p style={{ fontSize: 14, color: 'var(--muted)' }}>
             Built on established cardiovascular risk factors. It is a screening guide, not a
             diagnosis — your real numbers come from a proper check-up.
           </p>

@@ -3,7 +3,7 @@ import { Reveal } from '@/lib/motion';
 
 export function AppTeaser() {
   return (
-    <section className="dark appteaser" style={{ padding: '64px 0' }}>
+    <section className="mist appteaser" style={{ padding: '64px 0' }}>
       <Reveal seq className="wrap">
         <div>
           <h3>
@@ -15,7 +15,7 @@ export function AppTeaser() {
             Android and iOS.
           </p>
         </div>
-        <a href={clinic.appUrl} className="btn btn-ghost">
+        <a href={clinic.appUrl} className="btn btn-ghost-ink">
           See the app preview →
         </a>
       </Reveal>
