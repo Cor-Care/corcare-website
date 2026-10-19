@@ -4,7 +4,6 @@ export const clinic = {
   // Canonical origin for metadata, sitemap, robots, and JSON-LD.
   // Live on thecorcare.com since Sep 2026; the apex 308s to www, so www is canonical.
   siteUrl: 'https://www.thecorcare.com',
-  brandThe: 'The',
   brandName: 'Cor Care',
   city: 'Lahore',
   doctorName: 'Dr. Zeeshan Malik',

@@ -62,7 +62,6 @@ section { padding: 110px 0; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo svg { width: 30px; height: 30px; }
 .logo .word { font-family: var(--font-serif), serif; font-weight: 600; font-size: 19px; letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
-.logo .word small { display: block; font-family: var(--font-mono), monospace; font-weight: 500; font-size: 8.5px; letter-spacing: 0.34em; text-transform: uppercase; opacity: 0.55; margin-bottom: 2px; }
 
 /* ------- emergency strip ------- */
 .strip { background: var(--blush); color: var(--oxblood); border-bottom: 1px solid var(--line); font-size: 13px; padding: 9px 0; }

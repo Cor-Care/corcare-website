@@ -7,7 +7,7 @@ export function AppTeaser() {
       <Reveal seq className="wrap">
         <div>
           <h3>
-            Your heart, in your pocket — {clinic.brandThe} {clinic.brandName} app
+            Your heart, in your pocket — {clinic.brandName} app
           </h3>
           <p>
             Appointments, reports, medicine reminders, live queue tracking — and an SOS button

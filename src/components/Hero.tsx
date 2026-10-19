@@ -89,7 +89,7 @@ export function Hero() {
           <div className="monitor">
             <div className="monitor-top">
               <span>
-                {clinic.brandThe} {clinic.brandName} · Clinic
+                {clinic.brandName} · Clinic
               </span>
               <span className="mon-strip" aria-hidden="true">
                 <svg viewBox="0 0 120 19" preserveAspectRatio="none">

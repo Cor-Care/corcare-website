@@ -52,7 +52,7 @@ export function SiteFooter() {
         </div>
         <div className="fbottom">
           <span>
-            © 2026 {clinic.brandThe} {clinic.brandName}. All rights reserved.
+            © 2026 {clinic.brandName}. All rights reserved.
           </span>
           <span>Built by Jabran &amp; Co</span>
         </div>

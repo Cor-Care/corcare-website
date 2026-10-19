@@ -2,7 +2,7 @@ import { clinic } from '@/lib/config';
 
 export function Logo() {
   return (
-    <a className="logo" href="#" aria-label={`${clinic.brandThe} ${clinic.brandName}`}>
+    <a className="logo" href="#" aria-label={clinic.brandName}>
       <svg viewBox="0 0 32 32" fill="none">
         <path
           d="M3 19h6.5l2.5-7 4.5 12 3.5-9 2 4H29"
@@ -13,7 +13,6 @@ export function Logo() {
         />
       </svg>
       <span className="word">
-        <small>{clinic.brandThe}</small>
         {clinic.brandName}
       </span>
     </a>

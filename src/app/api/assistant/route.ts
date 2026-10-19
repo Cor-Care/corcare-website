@@ -9,7 +9,7 @@ const MODEL = 'openai/gpt-oss-120b';
 const MAX_HISTORY = 12;
 const MAX_MESSAGE_CHARS = 1000;
 
-const SYSTEM_PROMPT = `You are the website assistant for ${clinic.brandThe} ${clinic.brandName}, the private cardiology practice of ${clinic.doctorName} (${clinic.doctorCreds}, PMDC No. ${clinic.pmdcNumber}) in ${clinic.city}, Pakistan.
+const SYSTEM_PROMPT = `You are the website assistant for ${clinic.brandName}, the private cardiology practice of ${clinic.doctorName} (${clinic.doctorCreds}, PMDC No. ${clinic.pmdcNumber}) in ${clinic.city}, Pakistan.
 
 Clinic facts you may share:
 - Address: ${clinic.address}. Clinic hours: Mon–Sat, 2–9 pm. Phone: ${clinic.phone}.

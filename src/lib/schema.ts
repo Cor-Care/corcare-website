@@ -5,7 +5,7 @@ import { FAQS } from '@/lib/faqs';
 // schema.org JSON-LD for search engines and AI answer engines (SEO/GEO).
 // Rendered as a <script type="application/ld+json"> on the homepage.
 
-const brandFull = `${clinic.brandThe} ${clinic.brandName}`;
+const brandFull = `${clinic.brandName}`;
 const clinicId = `${clinic.siteUrl}/#clinic`;
 const physicianId = `${clinic.siteUrl}/#physician`;
 

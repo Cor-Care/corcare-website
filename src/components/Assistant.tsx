@@ -104,13 +104,13 @@ export function Assistant() {
         <svg className="ic" viewBox="0 0 24 24" style={{ stroke: '#fff' }}>
           <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4 4v-4H6.5A2.5 2.5 0 0 1 4 13.5v-7z" />
         </svg>
-        Ask {clinic.brandThe} {clinic.brandName}
+        Ask {clinic.brandName}
       </button>
       <div className={`ai-panel${open ? ' open' : ''}`}>
         <div className="ai-head">
           <div>
             <b>
-              {clinic.brandThe} {clinic.brandName} Assistant
+              {clinic.brandName} Assistant
             </b>
             <span>AI health guide — not a doctor</span>
           </div>
