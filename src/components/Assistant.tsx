@@ -19,7 +19,7 @@ const EMERGENCY_REPLY =
 // so the assistant still answers the common questions offline.
 const REPLIES: [RegExp, string, AssistantAction[]?][] = [
   [/book|appoint|slot|time/i, "You can book right on this page — tap 'Book a visit' above, or message us on WhatsApp and we'll confirm your slot instantly. Clinic hours are Mon–Sat, 2–9pm.", [{ type: 'book' }, { type: 'whatsapp' }]],
-  [/fee|price|charge|cost/i, `Consultation fee is ${clinic.consultationFee}, with a free follow-up within ${clinic.followUpDays} days. You can pay at the clinic or online.`],
+  [/fee|price|charge|cost|pay/i, `Consultation fee is ${clinic.consultationFee}, with a free follow-up within ${clinic.followUpDays} days. You pay at the clinic when you visit — there's no online payment.`],
   [/heart age|quiz|check/i, "Try the free Heart Age Check on this page — five questions, sixty seconds, instant estimate. Scroll to 'How old is your heart?'"],
   [/token|queue|wait/i, 'After you book, you get a token number. The live bar on this site and the app shows which token is being seen right now, so you can time your arrival.'],
   [/bp|blood pressure|hypertension/i, 'High blood pressure often has no symptoms but silently damages the heart. We run a dedicated hypertension clinic — monitoring, medicine adjustment and diet guidance. Would you like to book a BP check-up?'],

@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     'echocardiography Lahore',
     'angiography Lahore',
     'heart checkup Pakistan',
-    'online cardiologist consultation Pakistan',
+    'cardiologist Khayaban-e-Amin',
   ],
   alternates: { canonical: '/' },
   openGraph: {

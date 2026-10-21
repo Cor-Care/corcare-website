@@ -12,7 +12,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: 'What is the consultation fee?',
-    a: `Consultation with ${clinic.doctorName} is ${clinic.consultationFee}, and a follow-up visit within ${clinic.followUpDays} days is free. You can pay online when booking, or in cash at the clinic.`,
+    a: `Consultation with ${clinic.doctorName} is ${clinic.consultationFee}, and a follow-up visit within ${clinic.followUpDays} days is free. You pay at the clinic when you visit — nothing is paid online.`,
   },
   {
     q: 'When should I see a cardiologist?',
@@ -59,8 +59,8 @@ export const FAQS: FaqItem[] = [
     a: 'Reports are uploaded to your secure patient portal, and can be sent on WhatsApp on request.',
   },
   {
-    q: 'Is online payment secure?',
-    a: 'Yes — payments run through licensed Pakistani payment gateways. Cash at the clinic is always fine too.',
+    q: 'Can I pay online?',
+    a: "No — the clinic doesn't take payments online. You pay at the clinic when you visit, so there is nothing to pay when you book.",
   },
   {
     q: 'What if I have chest pain right now?',

@@ -79,8 +79,8 @@ export function BookingSection() {
           </p>
           <ul className="tick">
             <li>
-              {CHECK}Consultation fee: <b>&nbsp;{clinic.consultationFee}</b>&nbsp;— pay at clinic
-              or online
+              {CHECK}Consultation fee: <b>&nbsp;{clinic.consultationFee}</b>&nbsp;— pay at
+              the clinic when you visit
             </li>
             <li>{CHECK}Live token tracking — leave home at the right time</li>
             <li>
