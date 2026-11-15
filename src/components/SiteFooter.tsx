@@ -55,6 +55,10 @@ export function SiteFooter() {
           <span>
             © 2026 {clinic.brandName}. All rights reserved.
           </span>
+          <span className="flegal">
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/delete-account">Delete account</Link>
+          </span>
           <span>Built by Jabran &amp; Co</span>
         </div>
         <p className="disclaimer">

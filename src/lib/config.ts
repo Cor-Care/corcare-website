@@ -12,6 +12,7 @@ export const clinic = {
   phone: '+92 326 2000341',
   phoneHref: 'tel:+923262000341',
   whatsappHref: 'https://wa.me/923312000311',
+  whatsappDisplay: '+92 331 2000311',
   email: 'care@thecorcare.com',
   emergencyNumber: '1122',
   emergencyHref: 'tel:1122',
@@ -22,4 +23,6 @@ export const clinic = {
   followUpDays: '5',
   portalUrl: 'https://portal.thecorcare.com',
   appUrl: '/app',
+  // keep in sync: website / portal / app
+  accountDeletionDays: 30,
 } as const;
