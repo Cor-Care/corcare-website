@@ -58,6 +58,12 @@ export const PROCESSORS: readonly Processor[] = [
     where: 'USA and other countries where Google operates',
   },
   {
+    name: 'WhatsApp (Meta)',
+    purpose:
+      'Carries the doctor’s instructions to Cori and Cori’s replies, end-to-end encrypted, and any message Cori sends a patient on the doctor’s explicit instruction',
+    where: 'USA and other countries where Meta operates',
+  },
+  {
     name: 'Apple',
     purpose: 'Apple Push Notification service for iPhone notifications',
     where: 'USA',

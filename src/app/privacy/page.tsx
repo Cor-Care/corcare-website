@@ -54,7 +54,8 @@ export default function PrivacyPage() {
       </p>
       <p>
         Cori never messages patients on its own. It sends a WhatsApp message to a patient only
-        when the doctor explicitly asks it to.
+        when the doctor explicitly asks it to. The doctor’s instructions, Cori’s replies and any
+        such message travel through WhatsApp, end-to-end encrypted.
       </p>
 
       <Processing />
