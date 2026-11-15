@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { clinic } from '@/lib/config';
 import { Logo } from './Logo';
 
@@ -28,10 +29,10 @@ export function SiteFooter() {
           </div>
           <div>
             <h4>Explore</h4>
-            <a href="#services">Services</a>
-            <a href="#heartage">Heart Age Check</a>
-            <a href="#about">The doctor</a>
-            <a href="#book">Book a visit</a>
+            <Link href="/#services">Services</Link>
+            <Link href="/#heartage">Heart Age Check</Link>
+            <Link href="/#about">The doctor</Link>
+            <Link href="/#book">Book a visit</Link>
             <a href={clinic.portalUrl}>Patient portal</a>
             <a href={clinic.appUrl}>The app</a>
           </div>
@@ -60,8 +61,7 @@ export function SiteFooter() {
           Content on this website is for information only and is not a substitute for professional
           medical advice, diagnosis or treatment. The Heart Age Check is an educational screening
           tool, not a diagnosis. In an emergency, call {clinic.emergencyNumber} or visit the
-          nearest hospital. Development build — names, numbers, queue data and statistics are
-          placeholders.
+          nearest hospital.
         </p>
       </div>
     </footer>

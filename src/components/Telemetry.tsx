@@ -1,47 +1,26 @@
-import { T } from '@/lib/i18n';
+'use client';
+
+import { clinicStats } from '@/lib/content';
+import { useLang } from '@/lib/i18n';
 import { CountUp, Reveal } from '@/lib/motion';
 
 export function Telemetry() {
+  const { lang } = useLang();
+  if (clinicStats.length === 0) return null;
+
   return (
     <div className="telemetry">
       <Reveal seq className="wrap">
-        <div className="tele">
-          <b>
-            <CountUp value={15} duration={1100} />
-            <i>+</i>
-          </b>
-          <span>
-            <T k="stat1" />
-          </span>
-        </div>
-        <div className="tele">
-          <b>
-            <CountUp value={20000} />
-            <i>+</i>
-          </b>
-          <span>
-            <T k="stat2" />
-          </span>
-        </div>
-        <div className="tele">
-          <b>
-            <CountUp value={4.9} decimals={1} duration={1200} />
-            <i>/5</i>
-          </b>
-          <span>
-            <T k="stat3" />
-          </span>
-        </div>
-        <div className="tele">
-          <b>
-            &lt;
-            <CountUp value={15} duration={1100} />
-            <i>min</i>
-          </b>
-          <span>
-            <T k="stat4" />
-          </span>
-        </div>
+        {clinicStats.map((stat) => (
+          <div className="tele" key={stat.label.en}>
+            <b>
+              {stat.prefix}
+              <CountUp value={stat.value} decimals={stat.decimals} />
+              <i>{stat.suffix}</i>
+            </b>
+            <span className={lang === 'ur' ? 'urdu' : undefined}>{stat.label[lang]}</span>
+          </div>
+        ))}
       </Reveal>
     </div>
   );

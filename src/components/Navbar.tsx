@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { clinic } from '@/lib/config';
+import { testimonials } from '@/lib/content';
 import { T, useLang } from '@/lib/i18n';
 import { Logo } from './Logo';
 import { ScrollPulse } from './ScrollPulse';
@@ -19,7 +20,9 @@ export function Navbar() {
           <a href="#services" onClick={closeMenu}><T k="nav_services" /></a>
           <a href="#heartage" onClick={closeMenu}><T k="nav_heartage" /></a>
           <a href="#about" onClick={closeMenu}><T k="nav_about" /></a>
-          <a href="#stories" onClick={closeMenu}><T k="nav_stories" /></a>
+          {testimonials.length > 0 && (
+            <a href="#stories" onClick={closeMenu}><T k="nav_stories" /></a>
+          )}
           <a href={clinic.portalUrl} onClick={closeMenu}><T k="nav_portal" /></a>
           <a href={clinic.appUrl} onClick={closeMenu}><T k="nav_app" /></a>
         </div>

@@ -31,7 +31,7 @@ export function About() {
           <h2>Experience you can trust. Honesty you can feel.</h2>
           <p>
             {clinic.doctorName} is a consultant interventional cardiologist with 15+ years
-            across Pakistan&apos;s leading cardiac centres. Thousands of families come back for
+            across Pakistan&apos;s leading cardiac centres. Families come back for
             one reason: he tells them the truth about their hearts — including when the news is
             good.
           </p>
