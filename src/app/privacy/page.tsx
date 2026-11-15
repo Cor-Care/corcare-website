@@ -130,6 +130,10 @@ function CollectedData() {
           <b>Phone number</b> — the one on your clinic record or in your booking requests.
         </li>
         <li>
+          <b>Account ID</b> — a random identifier that links your records, devices and check-ins
+          to your account.
+        </li>
+        <li>
           Your sign-in session is kept on your device (in the app, or in your browser for the
           portal) so you stay signed in.
         </li>
@@ -137,9 +141,8 @@ function CollectedData() {
       <h3>Your health record</h3>
       <p>
         Your record at the clinic holds your appointments, the booking requests you send from the
-        app and your queue tokens, vitals (including the
-        readings you log yourself), medicines and your “taken” and “missed” check-ins,
-        prescriptions, reports and your Cor Score. Staff also record conditions on file, clinic
+        app and your queue tokens, vitals (including the readings you log yourself), medicines and
+        your “taken” and “missed” check-ins, prescriptions, reports and your Cor Score. Staff also record conditions on file, clinic
         notes and tasks; notes and tasks are seen only by clinic staff. Prescriptions appear in
         the portal and app only after the clinic approves them. The clinic uses your record to
         care for you.
@@ -152,12 +155,16 @@ function CodeRed() {
   return (
     <>
       <h2>Code Red (SOS)</h2>
-      <p>Code Red starts only when you press SOS — nothing about your location is collected before that. In the app, once you press it, we receive:</p>
+      <p>
+        Code Red starts only when you press SOS — nothing about your location is collected before
+        that. In the app, once you press it, we receive:
+      </p>
       <ul>
         <li>
-          your precise location, about every 15 seconds for up to 60 minutes or until the Code
-          Red is ended — if you allowed location sharing. It keeps going if you switch away from
-          the app, and your phone shows a “Code Red active” notification while it runs;
+          your location — precise, or approximate if that is all your phone allows — about every
+          15 seconds for up to 60 minutes or until the Code Red is ended, if you allowed location
+          sharing. It keeps going if you switch away from the app, and your phone shows a “Code
+          Red active” notification while it runs;
         </li>
         <li>your battery level;</li>
         <li>
@@ -263,7 +270,9 @@ function Retention() {
         Your sign-in and app data are kept until you delete your account (see{' '}
         <Link href="/delete-account">Delete your account</Link>). Your medical record is kept for
         as long as medical record-keeping rules require, even after your account is deleted.
-        Anonymous Heart Age Check results are kept as statistics.
+        Anonymous Heart Age Check results are kept as statistics. Cori keeps the doctor’s
+        conversation history, which can include details from your record, on the computer it runs
+        on, and the conversation also stays in the doctor’s WhatsApp.
       </p>
       <h3>Deleted when you delete your account</h3>
       <LegalList items={DELETED_ON_REQUEST} />

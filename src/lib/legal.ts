@@ -75,9 +75,9 @@ export const PROCESSORS: readonly Processor[] = [
   },
 ];
 
-// Where the website, portal and clinic system run. Update at the VPS cutover.
+// Where the website, portal, clinic system and Cori run. Update at the VPS cutover.
 export const HOSTING_LINE =
-  'The website, the patient portal and the clinic system are hosted by Vercel Inc. in the USA, which carries the web traffic to them.';
+  'The website, the patient portal and the clinic system are hosted by Vercel Inc. in the USA, which carries the web traffic to them. Cori runs on the clinic’s own computer, moving to the clinic’s own server.';
 
 // Exact launch-contract disclaimer (C4) — identical in both store listings and the review notes.
 export const NOT_A_MEDICAL_DEVICE =
@@ -86,4 +86,4 @@ export const NOT_A_MEDICAL_DEVICE =
 // Free-tier wording until billing is on for the clinic's Google project; then use:
 // "The clinic uses Google's paid tier, under which Google does not use this content to improve its products."
 export const GEMINI_LINE =
-  "While the clinic uses Google's free tier, Google may use this content to improve its services; we will switch to the paid tier, where it does not, before relying on Cori for patient care.";
+  "While the clinic uses Google's free tier, Google may use this content, including by human review, to improve its products; we will switch to the paid tier, where it does not, before relying on Cori for patient care.";
