@@ -75,7 +75,7 @@ export function BookingSection() {
             <T k="book_h2" />
           </h2>
           <p className="bl">
-            Book your clinic visit — confirmation and reminders arrive by WhatsApp and SMS.
+            Book your clinic visit — the clinic confirms your slot on WhatsApp.
           </p>
           <ul className="tick">
             <li>

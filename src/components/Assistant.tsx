@@ -18,14 +18,14 @@ const EMERGENCY_REPLY =
 // Scripted fallbacks (regex → canned answers) used only when the AI route fails,
 // so the assistant still answers the common questions offline.
 const REPLIES: [RegExp, string, AssistantAction[]?][] = [
-  [/book|appoint|slot|time/i, "You can book right on this page — tap 'Book a visit' above, or message us on WhatsApp and we'll confirm your slot instantly. Clinic hours are Mon–Sat, 2–9pm.", [{ type: 'book' }, { type: 'whatsapp' }]],
+  [/book|appoint|slot|time/i, "You can book right on this page — tap 'Book a visit' above, or message us on WhatsApp and we'll confirm your slot. Clinic hours are Mon–Sat, 2–9pm.", [{ type: 'book' }, { type: 'whatsapp' }]],
   [/fee|price|charge|cost|pay/i, `Consultation fee is ${clinic.consultationFee}, with a free follow-up within ${clinic.followUpDays} days. You pay at the clinic when you visit — there's no online payment.`],
   [/heart age|quiz|check/i, "Try the free Heart Age Check on this page — five questions, sixty seconds, instant estimate. Scroll to 'How old is your heart?'"],
   [/token|queue|wait/i, 'After you book, you get a token number. The live bar on this site and the app shows which token is being seen right now, so you can time your arrival.'],
   [/bp|blood pressure|hypertension/i, 'High blood pressure often has no symptoms but silently damages the heart. We run a dedicated hypertension clinic — monitoring, medicine adjustment and diet guidance. Would you like to book a BP check-up?'],
   [/echo|ecg|test/i, 'We offer ECG, echocardiography and stress testing on-site, reported by the consultant on the same visit. You can book any test through the appointment form.'],
   [/video|online consult/i, 'We currently see all patients in person at the clinic (Mon–Sat, 2–9pm) so the doctor can examine you properly. Your reports and prescriptions are delivered digitally in the patient portal.'],
-  [/portal|report|app/i, `Your reports, prescriptions and reminders live in the ${clinic.brandName} patient portal — tap 'Patient Portal' in the menu, or see the mobile app preview under 'The App'.`],
+  [/portal|report|app/i, `Your reports, prescriptions and reminders live in the ${clinic.brandName} patient portal — tap 'Patient Portal' in the menu, or read about the mobile app under 'The App'.`],
 ];
 
 const FALLBACK = `I couldn't reach our assistant just now. Ask me about fees, timings, tests, the Heart Age Check or the patient portal — or call us at ${clinic.phone}.`;

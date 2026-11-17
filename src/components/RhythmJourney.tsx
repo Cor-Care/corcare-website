@@ -15,7 +15,7 @@ const WAVES: Wave[] = [
   {
     tag: 'P · Book',
     title: 'Book in a minute',
-    body: 'Pick a slot here, in the app, or just WhatsApp us. Confirmation is instant — no queues, no phone hold music.',
+    body: 'Request a visit here or just WhatsApp us — the clinic confirms your slot on WhatsApp. No phone hold music.',
     path: 'M2 20 h10 a5 5 0 0 1 10 0 h20',
   },
   {

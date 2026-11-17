@@ -16,7 +16,7 @@ export function AppTeaser() {
           </p>
         </div>
         <a href={clinic.appUrl} className="btn btn-ghost-ink">
-          See the app preview →
+          About the app →
         </a>
       </Reveal>
     </section>
