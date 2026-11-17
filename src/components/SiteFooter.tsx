@@ -38,7 +38,13 @@ export function SiteFooter() {
           </div>
           <div>
             <h4>Clinic</h4>
-            <a href="#">{clinic.address}</a>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinic.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {clinic.address}
+            </a>
             <a href={clinic.phoneHref}>{clinic.phone}</a>
             <a href={`mailto:${clinic.email}`}>{clinic.email}</a>
           </div>

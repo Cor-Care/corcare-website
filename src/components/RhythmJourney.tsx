@@ -33,7 +33,7 @@ const WAVES: Wave[] = [
   {
     tag: 'R–R · Follow',
     title: 'We stay with you',
-    body: 'Medicine reminders, BP tracking and follow-up nudges between visits. Your heart is watched, not forgotten.',
+    body: 'Medicine reminders, a BP log and your records in one place between visits. Your heart is watched, not forgotten.',
     path: 'M2 15 h8 m6 0 h8 m6 0 h12',
     dashed: true,
   },
