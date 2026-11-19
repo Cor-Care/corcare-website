@@ -26,3 +26,12 @@ export const clinic = {
   // keep in sync: website / portal / app
   accountDeletionDays: 30,
 } as const;
+
+// Official social profiles, supplied 19 Nov 2026. Shown in the footer and
+// listed as `sameAs` in the homepage JSON-LD.
+export const socialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/photo/?fbid=122094061203560996&set=a.122094061227560996' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/145456710/' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@thecorcare' },
+  { label: 'Google reviews', href: 'https://share.google/PMjX2JtWbVUBBBSXw' },
+] as const;

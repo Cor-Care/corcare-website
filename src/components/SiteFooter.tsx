@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { clinic } from '@/lib/config';
+import { clinic, socialLinks } from '@/lib/config';
 import { Logo } from './Logo';
 
 export function SiteFooter() {
@@ -26,6 +26,13 @@ export function SiteFooter() {
               keep your whole heart history in one place.
             </p>
             <p className="f-urdu urdu">دل کا علاج — دیانتداری کے ساتھ</p>
+            <nav className="fsocial" aria-label="Cor Care on social media">
+              {socialLinks.map((link) => (
+                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              ))}
+            </nav>
           </div>
           <div>
             <h4>Explore</h4>

@@ -1,5 +1,5 @@
 import doctorPortrait from '@/assets/doctor/dr-zeeshan-malik-portrait.jpg';
-import { clinic } from '@/lib/config';
+import { clinic, socialLinks } from '@/lib/config';
 import { FAQS } from '@/lib/faqs';
 
 // schema.org JSON-LD for search engines and AI answer engines (SEO/GEO).
@@ -48,6 +48,7 @@ export const siteJsonLd = {
         'Preventive cardiology',
       ].map((name) => ({ '@type': 'MedicalProcedure', name })),
       employee: { '@id': physicianId },
+      sameAs: socialLinks.map((link) => link.href),
       areaServed: { '@type': 'Country', name: 'Pakistan' },
     },
     {
