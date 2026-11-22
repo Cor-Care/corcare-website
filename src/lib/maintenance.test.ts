@@ -39,7 +39,7 @@ test('reads this surface only and reports off with the owner message', async () 
   ]);
 });
 
-test('caches for 30 s, then asks again', async () => {
+test('caches for 30 s, then refreshes in the background while the last state answers', async () => {
   const { read, urls, advance } = reader([
     async () => json([{ enabled: false, message: null }]),
     async () => json([{ enabled: true, message: null }]),
@@ -49,7 +49,37 @@ test('caches for 30 s, then asks again', async () => {
   assert.equal((await read()).enabled, false);
   assert.equal(urls.length, 1);
   advance(1);
+  const kept: Promise<unknown>[] = [];
+  // Expired: the last state answers at once, the refresh is handed to waitUntil.
+  assert.equal((await read((p) => kept.push(p))).enabled, false);
+  assert.equal(urls.length, 2);
+  assert.equal(kept.length, 1);
+  await kept[0];
   assert.equal((await read()).enabled, true);
+  assert.equal(urls.length, 2);
+});
+
+test('waits for a fresh read when nothing is cached or the state is too old', async () => {
+  const { read, urls, advance } = reader([
+    async () => json([{ enabled: true, message: null }]),
+    async () => json([{ enabled: false, message: null }]),
+  ]);
+  assert.equal((await read()).enabled, true);
+  advance(30_000 + 10 * 60_000);
+  assert.equal((await read()).enabled, false);
+  assert.equal(urls.length, 2);
+});
+
+test('an expired state starts one background refresh for many callers', async () => {
+  const { read, urls, advance } = reader([
+    async () => json([{ enabled: true }]),
+    async () => json([{ enabled: true }]),
+  ]);
+  await read();
+  advance(30_000);
+  const kept: Promise<unknown>[] = [];
+  await Promise.all([read((p) => kept.push(p)), read((p) => kept.push(p)), read()]);
+  await Promise.all(kept);
   assert.equal(urls.length, 2);
 });
 

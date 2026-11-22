@@ -3,7 +3,7 @@
 // page / a 503. The privacy policy and account-deletion pages stay open: the
 // App Store / Play listings link to them.
 // Fails open; mock mode is untouched. See src/lib/maintenance.ts.
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, type NextFetchEvent, type NextRequest } from 'next/server';
 import { createSwitchReader, isAlwaysOpen, maintenanceResponse } from '@/lib/maintenance';
 
 const ALWAYS_OPEN = ['/privacy', '/delete-account'] as const;
@@ -14,10 +14,10 @@ const readSwitch = createSwitchReader({
   key: process.env.NEXT_PUBLIC_SUPABASE_KEY,
 });
 
-export async function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
   if (isAlwaysOpen(pathname, ALWAYS_OPEN)) return NextResponse.next();
-  const state = await readSwitch();
+  const state = await readSwitch((promise) => event.waitUntil(promise));
   return state.enabled ? NextResponse.next() : maintenanceResponse(state.message, pathname);
 }
 

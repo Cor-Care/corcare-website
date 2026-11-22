@@ -1,15 +1,20 @@
 // Maintenance switch, set by the owner control panel (secret.thecorcare.com).
 // src/proxy.ts reads the public `platform_switches` row for this surface
 // (corcare-db migration 20261122100000) and answers 503 with a maintenance
-// page while it is off. The flag is cached for TTL_MS; any failure (Supabase
-// down, slow, table missing) counts as ON, so an outage never takes the site
-// down twice. Without Supabase env (mock mode) nothing is ever fetched.
+// page while it is off. The flag is cached for TTL_MS; after that the last
+// known state keeps answering (for up to STALE_MS) while one background read
+// refreshes it, so a visitor never waits on Supabase once an instance has read
+// the switch. Any failure (Supabase down, slow, table missing) counts as ON, so
+// an outage never takes the site down twice. Without Supabase env (mock mode)
+// nothing is ever fetched.
 // Same file in corcare-website, corcare-portal and corcare-crm/web.
 
 export const DEFAULT_MAINTENANCE_MESSAGE = 'Cor Care is temporarily unavailable. Please call 0326 2000341.';
 const CLINIC_PHONE_TEL = '+923262000341';
 const EMERGENCY_TEL = '1122';
 const TTL_MS = 30_000;
+/** How long an expired state may still answer while the refresh runs; older = wait for it. */
+const STALE_MS = 10 * 60_000;
 const TIMEOUT_MS = 1_500;
 
 export interface SwitchState {
@@ -26,6 +31,7 @@ export interface SwitchReaderOptions {
   key: string | undefined;
   fetchImpl?: typeof fetch;
   ttlMs?: number;
+  staleMs?: number;
   timeoutMs?: number;
   now?: () => number;
 }
@@ -52,16 +58,25 @@ async function fetchSwitch(options: SwitchReaderOptions, url: string, key: strin
   }
 }
 
-/** Returns a cached reader of this surface's switch (one request per TTL, shared by concurrent callers). */
-export function createSwitchReader(options: SwitchReaderOptions): () => Promise<SwitchState> {
+/** Keeps background work alive after the response (the proxy's `event.waitUntil`). */
+export type WaitUntil = (promise: Promise<unknown>) => void;
+
+/**
+ * Returns a cached reader of this surface's switch (one request per TTL, shared by concurrent
+ * callers). Within STALE_MS after the TTL the last state answers at once and the refresh runs in
+ * the background (handed to `waitUntil`); with nothing cached, or older, callers wait for it.
+ */
+export function createSwitchReader(options: SwitchReaderOptions): (waitUntil?: WaitUntil) => Promise<SwitchState> {
   const { url, key } = options;
   if (!url || !key) return async () => OPEN;
   const now = options.now ?? Date.now;
   const ttl = options.ttlMs ?? TTL_MS;
+  const stale = options.staleMs ?? STALE_MS;
   let cached: { state: SwitchState; at: number } | null = null;
   let inflight: Promise<SwitchState> | null = null;
-  return () => {
-    if (cached && now() - cached.at < ttl) return Promise.resolve(cached.state);
+  return (waitUntil) => {
+    const age = cached ? now() - cached.at : Infinity;
+    if (cached && age < ttl) return Promise.resolve(cached.state);
     inflight ??= fetchSwitch(options, url, key)
       .then((state) => {
         cached = { state, at: now() };
@@ -70,6 +85,10 @@ export function createSwitchReader(options: SwitchReaderOptions): () => Promise<
       .finally(() => {
         inflight = null;
       });
+    if (cached && age < ttl + stale) {
+      waitUntil?.(inflight);
+      return Promise.resolve(cached.state);
+    }
     return inflight;
   };
 }

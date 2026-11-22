@@ -1,8 +1,10 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import type { BookingInput, DataSource, HeartAgeInput, QueueState } from './types';
 
 // Live backend against the corcare-db schema (see the corcare-db repo).
 // Dormant until NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_KEY are set.
+// supabase-js (~200 KB of script) is loaded on first use, after the page has
+// rendered, so it is not part of the home page's first load.
 
 interface ClinicSettingsRow {
   queue_active: boolean;
@@ -22,37 +24,55 @@ function toQueueState(row: ClinicSettingsRow): QueueState {
 
 export class SupabaseDataSource implements DataSource {
   readonly isMock = false;
-  private client: SupabaseClient;
+  private client: Promise<SupabaseClient> | null = null;
 
-  constructor(url: string, key: string) {
-    this.client = createClient(url, key);
+  constructor(
+    private readonly url: string,
+    private readonly key: string,
+  ) {}
+
+  private getClient(): Promise<SupabaseClient> {
+    this.client ??= import('@supabase/supabase-js').then(({ createClient }) => createClient(this.url, this.key));
+    return this.client;
   }
 
   subscribeQueue(onChange: (state: QueueState) => void): () => void {
-    void this.client
-      .from('clinic_settings')
-      .select('queue_active, current_token, last_issued_token, avg_consult_minutes')
-      .single()
-      .then(({ data }) => {
-        if (data) onChange(toQueueState(data as ClinicSettingsRow));
-      });
+    let stopped = false;
+    let stop: (() => void) | null = null;
 
-    const channel = this.client
-      .channel('clinic-queue')
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'clinic_settings' },
-        (payload) => onChange(toQueueState(payload.new as ClinicSettingsRow)),
-      )
-      .subscribe();
+    void this.getClient().then((client) => {
+      if (stopped) return;
+      void client
+        .from('clinic_settings')
+        .select('queue_active, current_token, last_issued_token, avg_consult_minutes')
+        .single()
+        .then(({ data }) => {
+          if (data && !stopped) onChange(toQueueState(data as ClinicSettingsRow));
+        });
+
+      const channel = client
+        .channel('clinic-queue')
+        .on(
+          'postgres_changes',
+          { event: 'UPDATE', schema: 'public', table: 'clinic_settings' },
+          (payload) => onChange(toQueueState(payload.new as ClinicSettingsRow)),
+        )
+        .subscribe();
+
+      stop = () => {
+        void client.removeChannel(channel);
+      };
+    });
 
     return () => {
-      void this.client.removeChannel(channel);
+      stopped = true;
+      stop?.();
     };
   }
 
   async submitBooking(input: BookingInput): Promise<{ ok: boolean; error?: string }> {
-    const { error } = await this.client.from('booking_requests').insert({
+    const client = await this.getClient();
+    const { error } = await client.from('booking_requests').insert({
       full_name: input.fullName,
       phone: input.phone,
       preferred_date: input.preferredDate,
@@ -65,7 +85,8 @@ export class SupabaseDataSource implements DataSource {
   }
 
   async recordHeartAgeCheck(input: HeartAgeInput): Promise<{ id: string | null }> {
-    const { data } = await this.client
+    const client = await this.getClient();
+    const { data } = await client
       .from('heart_age_checks')
       .insert({
         answers: input.answers,

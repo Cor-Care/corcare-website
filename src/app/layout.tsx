@@ -25,6 +25,9 @@ const urdu = Noto_Nastaliq_Urdu({
   subsets: ['arabic'],
   weight: ['400', '600'],
   variable: '--font-urdu',
+  // ~260 KB of font files: fetched when Urdu text is on screen instead of being preloaded
+  // ahead of the page's own scripts on every visit (English visitors only see it in the footer).
+  preload: false,
 });
 
 const siteTitle = 'Cor Care — Consultant Cardiologist in Lahore | Dr. Zeeshan Malik';
