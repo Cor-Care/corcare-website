@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { clinic, socialLinks } from '@/lib/config';
 import { Logo } from './Logo';
+import { SocialIcon } from './SocialIcon';
 
 export function SiteFooter() {
   return (
@@ -28,10 +29,26 @@ export function SiteFooter() {
             <p className="f-urdu urdu">دل کا علاج — دیانتداری کے ساتھ</p>
             <nav className="fsocial" aria-label="Cor Care on social media">
               {socialLinks.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.label}
+                <a
+                  key={link.id}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Cor Care on ${link.label}`}
+                  title={link.label}
+                >
+                  <SocialIcon id={link.id} />
                 </a>
               ))}
+              <a
+                href={clinic.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`WhatsApp Cor Care on ${clinic.whatsappDisplay}`}
+                title="WhatsApp"
+              >
+                <SocialIcon id="whatsapp" />
+              </a>
             </nav>
           </div>
           <div>

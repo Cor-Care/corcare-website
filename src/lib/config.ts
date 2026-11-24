@@ -30,11 +30,12 @@ export const clinic = {
 // Official social profiles, supplied 19 Nov 2026; Instagram and X added
 // 25 Nov 2026. Shown in the footer and listed as `sameAs` in the homepage
 // JSON-LD, so each entry must be the profile itself (not a post or photo).
+// The footer shows each as its official logo (components/SocialIcon.tsx).
 export const socialLinks = [
-  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61596829883145' },
-  { label: 'Instagram', href: 'https://www.instagram.com/thecorcare/' },
-  { label: 'X', href: 'https://x.com/thecorcare' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/145456710/' },
-  { label: 'YouTube', href: 'https://www.youtube.com/@thecorcare' },
-  { label: 'Google reviews', href: 'https://share.google/PMjX2JtWbVUBBBSXw' },
+  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61596829883145' },
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/thecorcare/' },
+  { id: 'x', label: 'X', href: 'https://x.com/thecorcare' },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/145456710/' },
+  { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@thecorcare' },
+  { id: 'google', label: 'Google reviews', href: 'https://share.google/PMjX2JtWbVUBBBSXw' },
 ] as const;
