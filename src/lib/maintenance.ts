@@ -113,7 +113,7 @@ main{max-width:440px;text-align:center}
 h1{font-family:Georgia,serif;font-weight:500;font-size:28px;margin:0 0 12px}
 p{font-size:17px;line-height:1.5;margin:0 0 24px;color:#3b2f35}
 a{display:block;margin:10px auto;padding:14px 18px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px}
-.call{background:#1f2b5b;color:#fff}.sos{background:#e0333f;color:#fff}
+.call{background:#072262;color:#fff}.sos{background:#D80505;color:#fff}
 </style></head>
 <body><main><h1>Cor Care</h1><p>${text}</p>
 <a class="call" href="tel:${CLINIC_PHONE_TEL}">Call the clinic: 0326 2000341</a>
